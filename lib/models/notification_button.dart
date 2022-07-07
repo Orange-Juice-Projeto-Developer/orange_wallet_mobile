@@ -5,29 +5,33 @@ class NotificationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      padding: const EdgeInsets.only(top: 5, right: 5),
+    return SizedBox(
       width: 30,
       height: 30,
       child: Stack(
+        // alignment: Alignment.center,
         children: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
+          const SizedBox(
+            width: 30,
+            height: 30,
+            child: Icon(
               size: 32,
               Icons.notifications_outlined,
               color: Colors.white,
             ),
           ),
           Container(
-            alignment: Alignment.topRight,
-            width: 10,
-            height: 10,
-            decoration: const BoxDecoration(
-              // borderRadius: BorderRadius.circular(100),
-              shape: BoxShape.circle,
-              color:  Color(0XFFFF8A00),
+            alignment: Alignment.bottomRight,
+            width: 27.5,
+            height: 10.5,
+            child: Container(
+              width: 8,
+              height: 8,
+              decoration: const BoxDecoration(
+                // borderRadius: BorderRadius.circular(100),
+                shape: BoxShape.circle,
+                color: Color(0XFFFF8A00),
+              ),
             ),
           ),
         ],
