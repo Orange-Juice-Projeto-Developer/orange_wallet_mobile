@@ -25,8 +25,8 @@ class NotificationButton extends StatelessWidget {
             width: 27.5,
             height: 10.5,
             child: Container(
-              width: 8,
-              height: 8,
+              width: 7.5,
+              height: 7.5,
               decoration: const BoxDecoration(
                 // borderRadius: BorderRadius.circular(100),
                 shape: BoxShape.circle,
