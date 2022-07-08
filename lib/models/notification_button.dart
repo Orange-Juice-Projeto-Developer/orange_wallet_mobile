@@ -9,15 +9,18 @@ class NotificationButton extends StatelessWidget {
       width: 30,
       height: 30,
       child: Stack(
-        // alignment: Alignment.center,
         children: [
-          const SizedBox(
+          SizedBox(
             width: 30,
             height: 30,
-            child: Icon(
-              size: 32,
-              Icons.notifications_outlined,
-              color: Colors.white,
+            child: InkWell(radius: 30,
+              borderRadius: BorderRadius.circular(100),
+              onTap: () {},
+              child: Icon(
+                size: 32,
+                Icons.notifications_outlined,
+                color: Colors.white,
+              ),
             ),
           ),
           Container(
