@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_wallet_mobile/models/cadastrar_transacao_button.dart';
 import 'package:orange_wallet_mobile/models/notification_button.dart';
 
 class HomePage extends StatelessWidget {
@@ -93,8 +94,8 @@ class HomePage extends StatelessWidget {
                             ),
                           ),
                           Row(
-                            children: const [
-                              Text.rich(
+                            children: [
+                              const Text.rich(
                                 TextSpan(
                                   children: [
                                     TextSpan(
@@ -110,17 +111,26 @@ class HomePage extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 20,
                               ),
-                              Icon(
+                              const Icon(
                                 Icons.visibility_off_outlined,
                                 color: Colors.white,
                               ),
                               // Aguardando ver sobre vetores ou baixar o baratinho de dinheiro
-                              // Spacer()
+                              const Spacer(),
 
-                              //COLOCAR AQUI O CODIGO DO DINHEIROS
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Image.asset(
+                                    isAntiAlias: true,
+                                    width: 44,
+                                    height: 44,
+                                    alignment: Alignment.topCenter,
+                                    fit: BoxFit.contain,
+                                    'assets/images/Dinheiro-Transparente.png'),
+                              ),
                             ],
                           ),
                         ],
@@ -128,29 +138,12 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Align(
                     heightFactor: 3.8,
                     alignment: Alignment.bottomCenter,
-                    child: ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        fixedSize: Size(mediaQuery.width, 48),
-                        primary: const Color(0XFFFF8A00),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                      ),
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.add_circle_outline,
-                        color: Colors.black,
-                      ),
-                      label: const Text(
-                        'Cadastrar Transação',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
+                    child: CadastrarTransacaoButton(),
                   ),
                 ),
               ],
