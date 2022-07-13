@@ -2,12 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:orange_wallet_mobile/models/cadastrar_transacao_button.dart';
 import 'package:orange_wallet_mobile/models/notification_button.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
+    bool saldoVisible = false;
+    double saldo = 8050.50;
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
@@ -93,45 +100,61 @@ class HomePage extends StatelessWidget {
                                   TextStyle(fontSize: 14, color: Colors.white),
                             ),
                           ),
-                          Row(
-                            children: [
-                              const Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: 'R\$  ',
-                                      style: TextStyle(
-                                          fontSize: 24, color: Colors.white),
+                          StatefulBuilder(
+                            builder: ((context, setState) {
+                              return Row(
+                                children: [
+                                  SizedBox(
+                                    width: 170,
+                                    height: 38,
+                                    child: Text.rich(
+                                      TextSpan(
+                                        children: [
+                                          const TextSpan(
+                                            text: 'R\$  ',
+                                            style: TextStyle(
+                                                fontSize: 24,
+                                                color: Colors.white),
+                                          ),
+                                          TextSpan(
+                                            text: saldoVisible
+                                                ? saldo.toStringAsFixed(2).replaceAll('.', ',')
+                                                : '*******',
+                                            style: const TextStyle(
+                                                fontSize: 32,
+                                                color: Colors.white),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    TextSpan(
-                                      text: '8050,00',
-                                      style: TextStyle(
-                                          fontSize: 32, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              const Icon(
-                                Icons.visibility_off_outlined,
-                                color: Colors.white,
-                              ),
-                              // Aguardando ver sobre vetores ou baixar o baratinho de dinheiro
-                              const Spacer(),
-
-                              Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: Image.asset(
-                                    isAntiAlias: true,
-                                    width: 44,
-                                    height: 44,
-                                    alignment: Alignment.topCenter,
-                                    fit: BoxFit.contain,
-                                    'assets/images/Dinheiro-Transparente.png'),
-                              ),
-                            ],
+                                  ),
+                                  const SizedBox(
+                                    width: 16,
+                                  ),
+                                  IconButton(
+                                    onPressed: (() {
+                                      saldoVisible = !saldoVisible;
+                                      setState(() {});
+                                    }),
+                                    icon: Icon(saldoVisible
+                                        ? Icons.visibility_off_outlined
+                                        : Icons.visibility_outlined),
+                                    color: Colors.white,
+                                  ),
+                                  const Spacer(),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Image.asset(
+                                        isAntiAlias: true,
+                                        width: 44,
+                                        height: 44,
+                                        alignment: Alignment.topCenter,
+                                        fit: BoxFit.contain,
+                                        'assets/images/Dinheiro-Transparente.png'),
+                                  ),
+                                ],
+                              );
+                            }),
                           ),
                         ],
                       ),
