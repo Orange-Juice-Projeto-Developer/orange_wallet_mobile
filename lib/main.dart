@@ -19,13 +19,13 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [Locale('pt', 'BR')],
       title: 'Orange Wallet',
       theme: ThemeData(
+        cardColor: Colors.grey,
         textTheme: const TextTheme(
-          headline1: TextStyle(color: Colors.white),
-          bodyText1: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        primarySwatch: Colors.blue,
+            // headline1: TextStyle(color: Colors.white),
+            // bodyText1: TextStyle(
+            // color: Colors.white,
+            // ),
+            ),
         backgroundColor: Colors.black,
         buttonTheme: const ButtonThemeData(
           buttonColor: Color(0XFFFF8A00),

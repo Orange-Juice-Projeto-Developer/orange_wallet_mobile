@@ -128,7 +128,8 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                             color: Colors.white, fontSize: 16),
                                       ),
                                     ),
-                                    TextFormField(keyboardType: TextInputType.number,
+                                    TextFormField(
+                                      keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
                                         isDense: true,
                                         filled: true,
@@ -174,17 +175,39 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                     ),
                                     TextFormField(
                                       controller: dataController,
-                                      keyboardType: TextInputType.datetime,
+                                      keyboardType: TextInputType.none,
                                       onTap: () async {
                                         DateTime? date = await showDatePicker(
+                                          builder: (context, child) {
+                                            return Theme(
+                                                data:
+                                                    Theme.of(context).copyWith(
+                                                  dialogBackgroundColor:
+                                                      Colors.black,
+                                                  colorScheme:
+                                                      const ColorScheme.light(
+                                                          primary:
+                                                              Color(0XFF383838),
+                                                          onPrimary:
+                                                              Colors.white,
+                                                          onSurface:
+                                                              Colors.white),
+                                                ),
+                                                child: child!);
+                                          },
                                           locale: const Locale('pt', 'BR'),
                                           context: context,
                                           initialDate: DateTime.now(),
                                           firstDate: DateTime(2020),
                                           lastDate: DateTime.now(),
                                         );
-                                        dataController.text =
-                                            date?.toIso8601String() ?? '';
+                                        dataController.text = date
+                                                ?.toString()
+                                                .substring(0, 10)
+                                                .split('-')
+                                                .reversed
+                                                .join('/') ??
+                                            '';
                                       },
                                       decoration: InputDecoration(
                                         isDense: true,
