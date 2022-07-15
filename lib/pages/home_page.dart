@@ -12,6 +12,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool saldoVisible = false;
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
@@ -43,9 +44,19 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
                   Row(
-                    children: const [
-                      NotificationButton(),
-                      Padding(
+                    children: [
+                      IconButton(
+                        onPressed: (() {
+                          saldoVisible = !saldoVisible;
+                          setState(() {});
+                        }),
+                        icon: Icon(saldoVisible
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined),
+                        color: Colors.white,
+                      ),
+                      const NotificationButton(),
+                      const Padding(
                         padding: EdgeInsets.all(16.0),
                         child: CircleAvatar(
                           radius: 25,
@@ -78,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: Column(
                     children: [
-                      const SaldoContainer(),
+                      SaldoContainer(isVisible: saldoVisible),
                       const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Align(
@@ -87,11 +98,17 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       Row(
-                        children: const [
+                        children: [
                           Expanded(
-                              child: ReceitaDespesaContainer(isReceita: true)),
+                              child: ReceitaDespesaContainer(
+                            isReceita: true,
+                            isVisible: saldoVisible,
+                          )),
                           Expanded(
-                              child: ReceitaDespesaContainer(isReceita: false)),
+                              child: ReceitaDespesaContainer(
+                            isReceita: false,
+                            isVisible: saldoVisible,
+                          )),
                         ],
                       )
                     ],

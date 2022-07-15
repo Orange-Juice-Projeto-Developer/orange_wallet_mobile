@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class ReceitaDespesaContainer extends StatelessWidget {
   final bool isReceita;
-  const ReceitaDespesaContainer({Key? key, required this.isReceita})
+  final bool isVisible;
+  const ReceitaDespesaContainer(
+      {Key? key, required this.isReceita, required this.isVisible})
       : super(key: key);
 
   @override
@@ -47,7 +49,7 @@ class ReceitaDespesaContainer extends StatelessWidget {
                                       : const Color(0XFFFFCAA4)),
                             ),
                             TextSpan(
-                              text: '5.000,00',
+                              text: isVisible ? '5.000,00' : '*******',
                               style: TextStyle(
                                   fontSize: 18,
                                   color: isReceita

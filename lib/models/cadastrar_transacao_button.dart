@@ -61,6 +61,7 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                           Padding(
                             padding: const EdgeInsets.only(top: 8),
                             child: Center(
+                              // Esse container é a aba cinza do showModalBottomSheet que fica no topo do Modal
                               child: Container(
                                 height: 6,
                                 width: mediaQuery.width / 2,
@@ -78,6 +79,89 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                           const Text(
                             'Cadastrar transação',
                             style: TextStyle(fontSize: 24, color: Colors.white),
+                          ),
+                          const SizedBox(
+                            width: 0,
+                            height: 32,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(
+                                top: 8, left: 12.0, right: 12, bottom: 8),
+                            width: mediaQuery.width,
+                            height: 48,
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Expanded(
+                                  // Botões Receita e Despesa
+                                  child: ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(14)),
+                                        primary: _receita
+                                            ? const Color(0XFFAEFE49)
+                                            : Colors.black),
+                                    onPressed: () {
+                                      if (!_receita) {
+                                        setState(() {
+                                          _receita = true;
+                                        });
+                                      }
+                                    },
+                                    icon: Icon(Icons.arrow_circle_up_outlined,
+                                        color: _receita
+                                            ? Colors.black
+                                            : Colors.white,
+                                        size: 23),
+                                    label: Text(
+                                      'Receita',
+                                      style: TextStyle(
+                                          color: _receita
+                                              ? Colors.black
+                                              : Colors.white),
+                                    ),
+                                  ),
+                                ),
+                                //sizedbox daqui coloquei lá em cima
+                                Expanded(
+                                  child: ElevatedButton.icon(
+                                    style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(14)),
+                                        primary: _receita
+                                            ? Colors.black
+                                            : const Color(0XFFFF523A)),
+                                    onPressed: () {
+                                      if (_receita) {
+                                        setState(() {
+                                          _receita = false;
+                                        });
+                                      }
+                                    },
+                                    icon: Icon(
+                                      Icons.arrow_circle_down_outlined,
+                                      color: _receita
+                                          ? Colors.white
+                                          : Colors.black,
+                                      size: 23,
+                                    ),
+                                    label: Text(
+                                      'Despesa',
+                                      style: TextStyle(
+                                          color: _receita
+                                              ? Colors.white
+                                              : Colors.black),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           const SizedBox(
                             height: 27,
@@ -296,89 +380,9 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                             height: 27,
                             width: 0,
                           ),
-                          Container(
-                            padding: const EdgeInsets.only(
-                                top: 8, left: 12.0, right: 12, bottom: 8),
-                            width: mediaQuery.width,
-                            height: 48,
-                            decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Expanded(
-                                  child: ElevatedButton.icon(
-                                    style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(14)),
-                                        primary: _receita
-                                            ? const Color(0XFFFFB45C)
-                                            : Colors.black),
-                                    onPressed: () {
-                                      if (!_receita) {
-                                        setState(() {
-                                          _receita = true;
-                                        });
-                                      }
-                                    },
-                                    icon: Icon(Icons.arrow_circle_up_outlined,
-                                        color: _receita
-                                            ? Colors.black
-                                            : Colors.white,
-                                        size: 23),
-                                    label: Text(
-                                      'Receita',
-                                      style: TextStyle(
-                                          color: _receita
-                                              ? Colors.black
-                                              : Colors.white),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 8,
-                                  height: 0,
-                                ),
-                                Expanded(
-                                  child: ElevatedButton.icon(
-                                    style: ElevatedButton.styleFrom(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(14)),
-                                        primary: _receita
-                                            ? Colors.black
-                                            : const Color(0XFFFFB45C)),
-                                    onPressed: () {
-                                      if (_receita) {
-                                        setState(() {
-                                          _receita = false;
-                                        });
-                                      }
-                                    },
-                                    icon: Icon(
-                                      Icons.arrow_circle_down_outlined,
-                                      color: _receita
-                                          ? Colors.white
-                                          : Colors.black,
-                                      size: 23,
-                                    ),
-                                    label: Text(
-                                      'Despesa',
-                                      style: TextStyle(
-                                          color: _receita
-                                              ? Colors.white
-                                              : Colors.black),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          // retirei daqui o container da receita e despesa
                           const SizedBox(
-                            height: 27,
+                            height: 20,
                             width: 0,
                           ),
                           ElevatedButton(

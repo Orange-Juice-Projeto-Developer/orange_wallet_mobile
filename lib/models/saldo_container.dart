@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 
-class SaldoContainer extends StatefulWidget {
-  const SaldoContainer({Key? key}) : super(key: key);
-
-  @override
-  State<SaldoContainer> createState() => _SaldoContainerState();
-}
-
-class _SaldoContainerState extends State<SaldoContainer> {
-  bool saldoVisible = false;
-  double saldo = 8050.50;
+class SaldoContainer extends StatelessWidget {
+  const SaldoContainer({Key? key, required this.isVisible}) : super(key: key);
+  final bool isVisible;
+  final double saldo = 8050.50;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -51,7 +45,7 @@ class _SaldoContainerState extends State<SaldoContainer> {
                                     fontSize: 24, color: Colors.white),
                               ),
                               TextSpan(
-                                text: saldoVisible
+                                text: isVisible
                                     ? saldo
                                         .toStringAsFixed(2)
                                         .replaceAll('.', ',')
@@ -65,16 +59,6 @@ class _SaldoContainerState extends State<SaldoContainer> {
                       ),
                       const SizedBox(
                         width: 16,
-                      ),
-                      IconButton(
-                        onPressed: (() {
-                          saldoVisible = !saldoVisible;
-                          setState(() {});
-                        }),
-                        icon: Icon(saldoVisible
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined),
-                        color: Colors.white,
                       ),
                       const Spacer(),
                       Padding(
