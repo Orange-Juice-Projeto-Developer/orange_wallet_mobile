@@ -23,7 +23,7 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
     var mediaQuery = MediaQuery.of(context).size;
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
-        fixedSize: Size(mediaQuery.width, 48),
+        fixedSize: Size(mediaQuery.width, mediaQuery.height * .05687),
         primary: const Color(0XFFFF8A00),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),

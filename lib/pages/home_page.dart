@@ -20,103 +20,114 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: mediaQuery.height / 20,
+        child: Container(
+          // padding: const EdgeInsets.all(8.0),
+          height: mediaQuery.height * .5,
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(40),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        'Olá,',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                      Text(
-                        'Theodoro',
-                        style: TextStyle(fontSize: 24, color: Colors.white),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: (() {
-                          saldoVisible = !saldoVisible;
-                          setState(() {});
-                        }),
-                        icon: Icon(saldoVisible
-                            ? Icons.visibility_off_outlined
-                            : Icons.visibility_outlined),
-                        color: Colors.white,
-                      ),
-                      const NotificationButton(),
-                      const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: CircleAvatar(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.black,
+                Color(0XFF323131),
+              ],
+            ),
+          ),
+          child: Column(
+            children: [
+              SizedBox(
+                height: mediaQuery.height * 0.07,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          'Olá,',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                        Text(
+                          'Theodoro',
+                          style: TextStyle(fontSize: 24, color: Colors.white),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: (() {
+                            saldoVisible = !saldoVisible;
+                            setState(() {});
+                          }),
+                          icon: Icon(saldoVisible
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined),
+                          color: Colors.white,
+                        ),
+                        const NotificationButton(),
+                        const SizedBox(
+                          width: 16,
+                          height: 0,
+                        ),
+                        const CircleAvatar(
                           radius: 25,
                           backgroundColor: Colors.black,
                           backgroundImage: NetworkImage(
                               'https://www.araujopolicastro.com.br/wp-content/uploads/2014/08/theodoro-arajo-v21.png'),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Stack(
-              children: [
-                Container(
-                  height: mediaQuery.height / 2.5,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.vertical(
-                      bottom: Radius.circular(40),
-                    ),
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.black,
-                        Color(0XFF323131),
+                        )
                       ],
                     ),
-                  ),
-                  child: Column(
-                    children: [
-                      SaldoContainer(isVisible: saldoVisible),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: CadastrarTransacaoButton(),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                              child: ReceitaDespesaContainer(
-                            isReceita: true,
-                            isVisible: saldoVisible,
-                          )),
-                          Expanded(
-                              child: ReceitaDespesaContainer(
-                            isReceita: false,
-                            isVisible: saldoVisible,
-                          )),
-                        ],
-                      )
-                    ],
-                  ),
+                  ],
                 ),
-              ],
-            ),
-          ],
+              ),
+              SizedBox(
+                height: mediaQuery.height * 0.02843,
+                width: 0,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                child: Column(
+                  children: [
+                    SaldoContainer(isVisible: saldoVisible),
+                    SizedBox(
+                      height: mediaQuery.height * 0.02843,
+                      width: 0,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                            child: ReceitaDespesaContainer(
+                          isReceita: true,
+                          isVisible: saldoVisible,
+                        )),
+                        SizedBox(
+                          height: 0,
+                          width: mediaQuery.width * 0.008,
+                        ),
+                        Expanded(
+                            child: ReceitaDespesaContainer(
+                          isReceita: false,
+                          isVisible: saldoVisible,
+                        )),
+                      ],
+                    ),
+                    SizedBox(
+                      height: mediaQuery.height * 0.02843,
+                      width: 0,
+                    ),
+                    const CadastrarTransacaoButton(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
