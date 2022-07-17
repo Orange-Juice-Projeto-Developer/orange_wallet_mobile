@@ -29,52 +29,45 @@ class SaldoContainer extends StatelessWidget {
                 style: TextStyle(fontSize: 14, color: Colors.white),
               ),
             ),
-            StatefulBuilder(
-              builder: ((context, setState) {
-                return Row(
-                  children: [
-                    SizedBox(
-                      width: 170,
-                      height: 38,
-                      child: Text.rich(
-                        TextSpan(
-                          children: [
-                            const TextSpan(
-                              text: 'R\$  ',
-                              style: TextStyle(
-                                  fontSize: 24, color: Colors.white),
-                            ),
-                            TextSpan(
-                              text: isVisible
-                                  ? saldo
-                                      .toStringAsFixed(2)
-                                      .replaceAll('.', ',')
-                                  : '*******',
-                              style: const TextStyle(
-                                  fontSize: 32, color: Colors.white),
-                            ),
-                          ],
+            Row(
+              children: [
+                SizedBox(
+                  width: 170,
+                  height: 38,
+                  child: Text.rich(
+                    TextSpan(
+                      children: [
+                        const TextSpan(
+                          text: 'R\$  ',
+                          style: TextStyle(fontSize: 24, color: Colors.white),
                         ),
-                      ),
+                        TextSpan(
+                          text: isVisible
+                              ? saldo.toStringAsFixed(2).replaceAll('.', ',')
+                              : '*******',
+                          style: const TextStyle(
+                              fontSize: 32, color: Colors.white),
+                        ),
+                      ],
                     ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    const Spacer(),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Image.asset(
-                          isAntiAlias: true,
-                          width: 44,
-                          height: 44,
-                          alignment: Alignment.topCenter,
-                          fit: BoxFit.contain,
-                          'assets/images/Dinheiro-Transparente.png'),
-                    ),
-                  ],
-                );
-              }),
-            ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 16,
+                ),
+                const Spacer(),
+                Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Image.asset(
+                      isAntiAlias: true,
+                      width: 44,
+                      height: 44,
+                      alignment: Alignment.topCenter,
+                      fit: BoxFit.contain,
+                      'assets/images/Dinheiro-Transparente.png'),
+                ),
+              ],
+            )
           ],
         ),
       ),

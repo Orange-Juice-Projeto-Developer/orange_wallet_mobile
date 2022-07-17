@@ -158,7 +158,30 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 2500.05, categoriaTransacao: 'Salário', dataTransacao: '11/02/2022')
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 2500.05, categoriaTransacao: 'Salário', dataTransacao: '07 Julho', isReceita: true,),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 196.17, categoriaTransacao: 'Posto de Gasolina', dataTransacao: '07 Julho', isReceita: false,),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 2500.05, categoriaTransacao: 'Salário', dataTransacao: '07 Julho', isReceita: true,),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 196.17, categoriaTransacao: 'Posto de Gasolina', dataTransacao: '07 Julho', isReceita: false,),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 2500.05, categoriaTransacao: 'Salário', dataTransacao: '07 Julho', isReceita: true,),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 196.17, categoriaTransacao: 'Posto de Gasolina', dataTransacao: '07 Julho', isReceita: false,),
+            ),
           ],
         ),
       ),
