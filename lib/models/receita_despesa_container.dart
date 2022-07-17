@@ -91,9 +91,7 @@ class ReceitaDespesaContainer extends StatelessWidget {
       ),
     );
   }
-}
-
-String receitaOuDespesa(
+  String _receitaOuDespesa(
     bool isReceita, bool isVisible, double receita, double despesa) {
   String retorno = '';
   if (isVisible == true) {
@@ -109,3 +107,5 @@ String receitaOuDespesa(
   }
   return retorno;
 }
+}
+
