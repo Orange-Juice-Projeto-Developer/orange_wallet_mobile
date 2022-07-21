@@ -42,7 +42,7 @@ class SaldoContainer extends StatelessWidget {
                       ),
                       TextSpan(
                         text: isVisible
-                            ? Convert().moeda(valor: saldo)
+                            ? Convert().currency(valor: saldo)
                             : '*******',
                         style: const TextStyle(
                             fontSize: 32, color: Colors.white),

@@ -1,7 +1,7 @@
 class Convert {
   final _regex = RegExp(r'(?=(?:...)*$)');
 
-  String moeda({required valor}) {
+  String currency({required valor}) {
     var str = valor.toStringAsFixed(2).split('.');
 
     final tratar = str[0].split(_regex);

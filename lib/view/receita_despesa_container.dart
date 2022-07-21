@@ -92,10 +92,10 @@ class ReceitaDespesaContainer extends StatelessWidget {
     String retorno = '';
     if (isVisible == true) {
       if (isReceita == true) {
-        final receitaString = Convert().moeda(valor: receita);
+        final receitaString = Convert().currency(valor: receita);
         retorno = receitaString;
       } else if (isReceita == false) {
-        final despesaString = Convert().moeda(valor: despesa);
+        final despesaString = Convert().currency(valor: despesa);
         retorno = despesaString;
       }
     } else {
