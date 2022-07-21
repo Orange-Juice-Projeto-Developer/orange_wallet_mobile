@@ -80,7 +80,7 @@ class ListaTransacoesContainer extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: Text(
                 isVisible
-                    ? Convert().currency(valor: valorTransacao)
+                    ? Convert.currency(valor: valorTransacao)
                     : '*******',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
