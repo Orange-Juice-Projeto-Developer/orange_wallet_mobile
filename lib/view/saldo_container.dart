@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../global/convert.dart';
+
 class SaldoContainer extends StatelessWidget {
   const SaldoContainer({Key? key, required this.isVisible}) : super(key: key);
   final bool isVisible;
-  final double saldo = 5999.94;
+  final double saldo = 250000.77;
 
   @override
   Widget build(BuildContext context) {
@@ -31,25 +33,21 @@ class SaldoContainer extends StatelessWidget {
             ),
             Row(
               children: [
-                SizedBox(
-                  width: 170,
-                  height: 38,
-                  child: Text.rich(
-                    TextSpan(
-                      children: [
-                        const TextSpan(
-                          text: 'R\$  ',
-                          style: TextStyle(fontSize: 24, color: Colors.white),
-                        ),
-                        TextSpan(
-                          text: isVisible
-                              ? saldo.toStringAsFixed(2).replaceAll('.', ',')
-                              : '*******',
-                          style: const TextStyle(
-                              fontSize: 32, color: Colors.white),
-                        ),
-                      ],
-                    ),
+                Text.rich(
+                  TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: 'R\$  ',
+                        style: TextStyle(fontSize: 24, color: Colors.white),
+                      ),
+                      TextSpan(
+                        text: isVisible
+                            ? Convert().moeda(valor: saldo)
+                            : '*******',
+                        style: const TextStyle(
+                            fontSize: 32, color: Colors.white),
+                      ),
+                    ],
                   ),
                 ),
                 const SizedBox(

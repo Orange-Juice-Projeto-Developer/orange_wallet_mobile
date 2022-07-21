@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_wallet_mobile/global/convert.dart';
 
 class ListaTransacoesContainer extends StatelessWidget {
   final String dataTransacao;
@@ -49,7 +50,10 @@ class ListaTransacoesContainer extends StatelessWidget {
                 children: [
                   Text(
                     categoriaTransacao,
-                    style: const TextStyle(fontSize: 16, color: Colors.white),
+                    style: const TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 9,
@@ -63,28 +67,27 @@ class ListaTransacoesContainer extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                    text: isReceita ? '+ R\$ ' : '- R\$ ',
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: isReceita
-                            ? const Color(0XFFDCFFA4)
-                            : const Color(0XFFFFCAA4)),
-                  ),
-                  TextSpan(
-                    text: isVisible
-                        ? valorTransacao.toStringAsFixed(2).replaceAll('.', ',')
-                        : '*******',
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: isReceita
-                            ? const Color(0XFFDCFFA4)
-                            : const Color(0XFFFFCAA4)),
-                  ),
-                ],
+            Text(
+              isReceita ? '+ R\$ ' : '- R\$ ',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                  color: isReceita
+                      ? const Color(0XFFDCFFA4)
+                      : const Color(0XFFFFCAA4)),
+            ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                isVisible
+                    ? Convert().moeda(valor: valorTransacao)
+                    : '*******',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: isReceita
+                        ? const Color(0XFFDCFFA4)
+                        : const Color(0XFFFFCAA4)),
               ),
             ),
             const SizedBox(

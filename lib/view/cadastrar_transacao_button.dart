@@ -172,7 +172,11 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                             style: TextStyle(color: Colors.white, fontSize: 16),
                           ),
                           TextFormField(
+                            cursorColor: const Color(0XFFFF8A00),
                             decoration: InputDecoration(
+                              focusedBorder: const OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0XFFFF8A00))),
                               isDense: true,
                               filled: true,
                               fillColor: Colors.white,
@@ -213,8 +217,12 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                       ),
                                     ),
                                     TextFormField(
+                                      cursorColor: const Color(0XFFFF8A00),
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
+                                        focusedBorder: const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(0XFFFF8A00))),
                                         isDense: true,
                                         filled: true,
                                         fillColor: Colors.white,
@@ -258,6 +266,7 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                       ),
                                     ),
                                     TextFormField(
+                                      cursorColor: const Color(0XFFFF8A00),
                                       controller: dataController,
                                       keyboardType: TextInputType.none,
                                       onTap: () async {
@@ -294,6 +303,10 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                             '';
                                       },
                                       decoration: InputDecoration(
+                                        focusedBorder: const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(0XFFFF8A00))),
+                                        focusColor: const Color(0XFFFF8A00),
                                         isDense: true,
                                         filled: true,
                                         fillColor: Colors.white,
@@ -335,27 +348,43 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                             ),
                           ),
                           DropdownButtonFormField<String>(
+                            dropdownColor: const Color(0XFF383838),
                             isDense: true,
                             items: const [
                               DropdownMenuItem(
                                 value: 'carro',
-                                child: Text('Combustível'),
+                                child: Text(
+                                  'Combustível',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: 'compras',
-                                child: Text('Mantimentos'),
+                                child: Text(
+                                  'Mantimentos',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: 'alimento',
-                                child: Text('Alimentação'),
+                                child: Text(
+                                  'Alimentação',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: 'essenciais',
-                                child: Text('Água/Luz/Internet/Telefone'),
+                                child: Text(
+                                  'Água/Luz/Internet/Telefone',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ],
                             onChanged: (String? value) {},
                             decoration: InputDecoration(
+                              focusedBorder: const OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0XFFFF8A00))),
                               isDense: true,
                               filled: true,
                               fillColor: Colors.white,

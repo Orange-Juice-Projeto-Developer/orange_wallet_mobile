@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../global/convert.dart';
+
 class ReceitaDespesaContainer extends StatelessWidget {
   final bool isReceita;
   final bool isVisible;
@@ -51,7 +53,7 @@ class ReceitaDespesaContainer extends StatelessWidget {
                         isVisible,
                         saldoReceita,
                         saldoDespesa,
-                      ).toString().replaceAll('.', ','),
+                      ),
                       style: TextStyle(
                           fontSize: 18,
                           color: isReceita
@@ -90,10 +92,10 @@ class ReceitaDespesaContainer extends StatelessWidget {
     String retorno = '';
     if (isVisible == true) {
       if (isReceita == true) {
-        final receitaString = receita.toString();
+        final receitaString = Convert().moeda(valor: receita);
         retorno = receitaString;
       } else if (isReceita == false) {
-        final despesaString = despesa.toString();
+        final despesaString = Convert().moeda(valor: despesa);
         retorno = despesaString;
       }
     } else {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:orange_wallet_mobile/models/cadastrar_transacao_button.dart';
-import 'package:orange_wallet_mobile/models/lista_transacoes_container.dart';
-import 'package:orange_wallet_mobile/models/notification_button.dart';
-import 'package:orange_wallet_mobile/models/receita_despesa_container.dart';
-import 'package:orange_wallet_mobile/models/saldo_container.dart';
+import 'package:orange_wallet_mobile/view/cadastrar_transacao_button.dart';
+import 'package:orange_wallet_mobile/view/lista_transacoes_container.dart';
+import 'package:orange_wallet_mobile/view/notification_button.dart';
+import 'package:orange_wallet_mobile/view/receita_despesa_container.dart';
+import 'package:orange_wallet_mobile/view/saldo_container.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -160,27 +160,27 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 2500.05, categoriaTransacao: 'Salário', dataTransacao: '07 Julho', isReceita: true,),
+              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 1234.05, categoriaTransacao: 'Salário', dataTransacao: '07 Julho', isReceita: true,),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 196.17, categoriaTransacao: 'Posto de Gasolina', dataTransacao: '07 Julho', isReceita: false,),
+              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 334.17, categoriaTransacao: 'Posto de Gasolina', dataTransacao: '07 Julho', isReceita: false,),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 2500.05, categoriaTransacao: 'Salário', dataTransacao: '07 Julho', isReceita: true,),
+              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 1274.90, categoriaTransacao: 'Salário', dataTransacao: '07 Julho', isReceita: true,),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 196.17, categoriaTransacao: 'Posto de Gasolina', dataTransacao: '07 Julho', isReceita: false,),
+              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 245.43, categoriaTransacao: 'Posto de Gasolina', dataTransacao: '07 Julho', isReceita: false,),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 2500.05, categoriaTransacao: 'Salário', dataTransacao: '07 Julho', isReceita: true,),
+              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 415.05, categoriaTransacao: 'Salário', dataTransacao: '07 Julho', isReceita: true,),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 196.17, categoriaTransacao: 'Posto de Gasolina', dataTransacao: '07 Julho', isReceita: false,),
+              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 912.81, categoriaTransacao: 'Posto de Gasolina', dataTransacao: '07 Julho', isReceita: false,),
             ),
           ],
         ),
