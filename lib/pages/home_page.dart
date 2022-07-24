@@ -178,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return Column(
                       children: List<ListaTransacoesContainer>.generate(
-                        list.length,
+                        list.length > 6 ? 6 : list.length,
                         (index) {
                           return ListaTransacoesContainer(
                               isVisible: isVisible,
@@ -192,7 +192,6 @@ class _HomePageState extends State<HomePage> {
                   } else if (snapshot.hasError) {
                     return const Text(
                       'Tivemos um problema com a sua requisição.',
-                      style: TextStyle(color: Colors.white),
                     );
                   } else {
                     return const CircularProgressIndicator(

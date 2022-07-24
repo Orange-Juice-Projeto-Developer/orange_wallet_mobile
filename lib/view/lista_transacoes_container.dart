@@ -40,7 +40,7 @@ class ListaTransacoesContainer extends StatelessWidget {
                 fit: BoxFit.contain,
                 isReceita == 'Receita'
                     ? 'assets/images/Salario.png'
-                    : 'assets/images/Combustivel.png',
+                    : 'assets/images/Alimentacao.png',
               ),
             ),
             Padding(
@@ -58,7 +58,7 @@ class ListaTransacoesContainer extends StatelessWidget {
                     width: 0,
                   ),
                   Text(
-                    dataTransacao,
+                    Convert.date(date: dataTransacao),
                     style: const TextStyle(
                       fontSize: 12,
                     ),
