@@ -61,7 +61,6 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                           Padding(
                             padding: const EdgeInsets.only(top: 8),
                             child: Center(
-                              // Esse container é a aba cinza do showModalBottomSheet que fica no topo do Modal
                               child: Container(
                                 height: 6,
                                 width: mediaQuery.width / 2,
@@ -78,7 +77,9 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                           ),
                           const Text(
                             'Cadastrar transação',
-                            style: TextStyle(fontSize: 24, color: Colors.white),
+                            style: TextStyle(
+                              fontSize: 24,
+                            ),
                           ),
                           const SizedBox(
                             width: 0,
@@ -97,7 +98,6 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Expanded(
-                                  // Botões Receita e Despesa
                                   child: ElevatedButton.icon(
                                     style: ElevatedButton.styleFrom(
                                         shape: RoundedRectangleBorder(
@@ -127,7 +127,6 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                     ),
                                   ),
                                 ),
-                                //sizedbox daqui coloquei lá em cima
                                 Expanded(
                                   child: ElevatedButton.icon(
                                     style: ElevatedButton.styleFrom(
@@ -169,7 +168,9 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                           ),
                           const Text(
                             'Transação',
-                            style: TextStyle(color: Colors.white, fontSize: 16),
+                            style: TextStyle(
+                              fontSize: 16,
+                            ),
                           ),
                           TextFormField(
                             cursorColor: const Color(0XFFFF8A00),
@@ -179,7 +180,6 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                       BorderSide(color: Color(0XFFFF8A00))),
                               isDense: true,
                               filled: true,
-                              fillColor: Colors.white,
                               hintText:
                                   'Escreva aqui o título da sua transação',
                               enabledBorder: OutlineInputBorder(
@@ -213,7 +213,8 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                       child: Text(
                                         'Valor',
                                         style: TextStyle(
-                                            color: Colors.white, fontSize: 16),
+                                          fontSize: 16,
+                                        ),
                                       ),
                                     ),
                                     TextFormField(
@@ -225,7 +226,6 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                                 color: Color(0XFFFF8A00))),
                                         isDense: true,
                                         filled: true,
-                                        fillColor: Colors.white,
                                         hintText: 'R\$ 0,00',
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
@@ -262,7 +262,8 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                       child: Text(
                                         'Data',
                                         style: TextStyle(
-                                            color: Colors.white, fontSize: 16),
+                                          fontSize: 16,
+                                        ),
                                       ),
                                     ),
                                     TextFormField(
@@ -309,7 +310,6 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                         focusColor: const Color(0XFFFF8A00),
                                         isDense: true,
                                         filled: true,
-                                        fillColor: Colors.white,
                                         hintText: '01/01/2020',
                                         enabledBorder: OutlineInputBorder(
                                           borderRadius:
@@ -343,8 +343,9 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                             padding: EdgeInsets.only(bottom: 8.0),
                             child: Text(
                               'Categoria',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 16),
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                           DropdownButtonFormField<String>(
@@ -355,28 +356,24 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                 value: 'carro',
                                 child: Text(
                                   'Combustível',
-                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
                               DropdownMenuItem(
                                 value: 'compras',
                                 child: Text(
                                   'Mantimentos',
-                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
                               DropdownMenuItem(
                                 value: 'alimento',
                                 child: Text(
                                   'Alimentação',
-                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
                               DropdownMenuItem(
                                 value: 'essenciais',
                                 child: Text(
                                   'Água/Luz/Internet/Telefone',
-                                  style: TextStyle(color: Colors.white),
                                 ),
                               ),
                             ],
@@ -387,7 +384,6 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                       BorderSide(color: Color(0XFFFF8A00))),
                               isDense: true,
                               filled: true,
-                              fillColor: Colors.white,
                               hintText: 'Selecione a categoria',
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(8),
@@ -409,7 +405,6 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                             height: 27,
                             width: 0,
                           ),
-                          // retirei daqui o container da receita e despesa
                           const SizedBox(
                             height: 20,
                             width: 0,

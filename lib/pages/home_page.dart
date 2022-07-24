@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:orange_wallet_mobile/controller/list_transaction_controller.dart';
+import 'package:orange_wallet_mobile/models/list_transaction.dart';
 import 'package:orange_wallet_mobile/view/cadastrar_transacao_button.dart';
 import 'package:orange_wallet_mobile/view/lista_transacoes_container.dart';
 import 'package:orange_wallet_mobile/view/notification_button.dart';
@@ -13,7 +15,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool saldoVisible = false;
+  bool isVisible = false;
+  List<ListTransaction> list = [];
+  var listController = ListTransactionController().findAll();
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () async {
+      list = await listController;
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
@@ -22,9 +35,8 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: Column(
-          children: [
+          children: <Widget>[
             Container(
-              // padding: const EdgeInsets.all(8.0),
               height: mediaQuery.height * .5,
               decoration: const BoxDecoration(
                 borderRadius: BorderRadius.vertical(
@@ -68,10 +80,10 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             IconButton(
                               onPressed: (() {
-                                saldoVisible = !saldoVisible;
+                                isVisible = !isVisible;
                                 setState(() {});
                               }),
-                              icon: Icon(saldoVisible
+                              icon: Icon(isVisible
                                   ? Icons.visibility_off_outlined
                                   : Icons.visibility_outlined),
                               color: Colors.white,
@@ -100,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: Column(
                       children: [
-                        SaldoContainer(isVisible: saldoVisible),
+                        SaldoContainer(isVisible: isVisible),
                         SizedBox(
                           height: mediaQuery.height * 0.02843,
                           width: 0,
@@ -110,7 +122,7 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                                 child: ReceitaDespesaContainer(
                               isReceita: true,
-                              isVisible: saldoVisible,
+                              isVisible: isVisible,
                             )),
                             SizedBox(
                               height: 0,
@@ -119,7 +131,7 @@ class _HomePageState extends State<HomePage> {
                             Expanded(
                                 child: ReceitaDespesaContainer(
                               isReceita: false,
-                              isVisible: saldoVisible,
+                              isVisible: isVisible,
                             )),
                           ],
                         ),
@@ -160,27 +172,35 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 1234.05, categoriaTransacao: 'Salário', dataTransacao: '07 Julho', isReceita: true,),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 334.17, categoriaTransacao: 'Posto de Gasolina', dataTransacao: '07 Julho', isReceita: false,),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 1274.90, categoriaTransacao: 'Salário', dataTransacao: '07 Julho', isReceita: true,),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 245.43, categoriaTransacao: 'Posto de Gasolina', dataTransacao: '07 Julho', isReceita: false,),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 415.05, categoriaTransacao: 'Salário', dataTransacao: '07 Julho', isReceita: true,),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: ListaTransacoesContainer(isVisible: saldoVisible, valorTransacao: 912.81, categoriaTransacao: 'Posto de Gasolina', dataTransacao: '07 Julho', isReceita: false,),
+              child: FutureBuilder(
+                future: listController,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return Column(
+                      children: List<ListaTransacoesContainer>.generate(
+                        list.length,
+                        (index) {
+                          return ListaTransacoesContainer(
+                              isVisible: isVisible,
+                              valorTransacao: list[index].value,
+                              tituloTransacao: list[index].title,
+                              dataTransacao: list[index].date,
+                              isReceita: list[index].type);
+                        },
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return const Text(
+                      'Tivemos um problema com a sua requisição.',
+                      style: TextStyle(color: Colors.white),
+                    );
+                  } else {
+                    return const CircularProgressIndicator(
+                      color: Color(0XFFFF8A00),
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),

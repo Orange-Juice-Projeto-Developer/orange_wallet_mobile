@@ -1,6 +1,6 @@
 class Convert {
 
-  static String currency({required valor}) {
+  static String currency({required double valor}) {
 
     final regex = RegExp(r'(?=(?:...)*$)');
     

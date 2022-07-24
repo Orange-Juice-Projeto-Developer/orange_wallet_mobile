@@ -3,8 +3,8 @@ import 'package:orange_wallet_mobile/global/convert.dart';
 
 class ListaTransacoesContainer extends StatelessWidget {
   final String dataTransacao;
-  final String categoriaTransacao;
-  final bool isReceita;
+  final String tituloTransacao;
+  final String isReceita;
   final bool isVisible;
   final double valorTransacao;
 
@@ -12,7 +12,7 @@ class ListaTransacoesContainer extends StatelessWidget {
       {Key? key,
       required this.isVisible,
       required this.valorTransacao,
-      required this.categoriaTransacao,
+      required this.tituloTransacao,
       required this.dataTransacao,
       required this.isReceita})
       : super(key: key);
@@ -38,7 +38,7 @@ class ListaTransacoesContainer extends StatelessWidget {
                 height: 30,
                 alignment: Alignment.topCenter,
                 fit: BoxFit.contain,
-                isReceita
+                isReceita == 'Receita'
                     ? 'assets/images/Salario.png'
                     : 'assets/images/Combustivel.png',
               ),
@@ -49,11 +49,9 @@ class ListaTransacoesContainer extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    categoriaTransacao,
+                    tituloTransacao,
                     style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                        fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(
                     height: 9,
@@ -61,31 +59,31 @@ class ListaTransacoesContainer extends StatelessWidget {
                   ),
                   Text(
                     dataTransacao,
-                    style: const TextStyle(fontSize: 12, color: Colors.white),
+                    style: const TextStyle(
+                      fontSize: 12,
+                    ),
                   ),
                 ],
               ),
             ),
             const Spacer(),
             Text(
-              isReceita ? '+ R\$ ' : '- R\$ ',
+              isReceita == 'Receita' ? '+ R\$ ' : '- R\$ ',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
-                  color: isReceita
+                  color: isReceita == 'Receita'
                       ? const Color(0XFFDCFFA4)
                       : const Color(0XFFFFCAA4)),
             ),
             Align(
               alignment: Alignment.centerRight,
               child: Text(
-                isVisible
-                    ? Convert.currency(valor: valorTransacao)
-                    : '*******',
+                isVisible ? Convert.currency(valor: valorTransacao) : '*******',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
-                    color: isReceita
+                    color: isReceita == 'Receita'
                         ? const Color(0XFFDCFFA4)
                         : const Color(0XFFFFCAA4)),
               ),
