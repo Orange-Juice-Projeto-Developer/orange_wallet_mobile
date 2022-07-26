@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:orange_wallet_mobile/pages/home_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-void main() {
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(

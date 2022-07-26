@@ -1,15 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:orange_wallet_mobile/controller/list_transaction_controller.dart';
 
 import '../global/convert.dart';
 
 class SaldoContainer extends StatelessWidget {
   const SaldoContainer({Key? key, required this.isVisible}) : super(key: key);
   final bool isVisible;
-  final double saldo = 250000.77;
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
+    double saldo = 0;
+    final saldoController = ListTransactionController().getSaldo();
+
+    Widget carregarSaldo(bool isVisible) {
+      if (isVisible) {
+        return FutureBuilder(
+            future: saldoController,
+            builder: (_, snapshot) {
+              if (snapshot.hasData &&
+                  snapshot.connectionState == ConnectionState.done) {
+                saldo = snapshot.data as double;
+                return Text(
+                  Convert.currency(valor: saldo),
+                  style: const TextStyle(fontSize: 32, color: Colors.white),
+                );
+              } else if (snapshot.hasError) {
+                return const Text('Erro');
+              } else {
+                return const Text('Loading...');
+              }
+            });
+      } else {
+        return const Text(
+          '*******',
+          style: TextStyle(fontSize: 32, color: Colors.white),
+        );
+      }
+    }
+
     return Container(
       height: mediaQuery.height * 0.11729,
       decoration: BoxDecoration(
@@ -33,23 +62,14 @@ class SaldoContainer extends StatelessWidget {
             ),
             Row(
               children: [
-                Text.rich(
-                  TextSpan(
-                    children: [
-                      const TextSpan(
-                        text: 'R\$  ',
-                        style: TextStyle(fontSize: 24, color: Colors.white),
-                      ),
-                      TextSpan(
-                        text: isVisible
-                            ? Convert.currency(valor: saldo)
-                            : '*******',
-                        style: const TextStyle(
-                            fontSize: 32, color: Colors.white),
-                      ),
-                    ],
+                const Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Text(
+                    'R\$  ',
+                    style: TextStyle(fontSize: 24, color: Colors.white),
                   ),
                 ),
+                carregarSaldo(isVisible),
                 const SizedBox(
                   width: 16,
                 ),

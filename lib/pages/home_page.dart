@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:orange_wallet_mobile/controller/list_transaction_controller.dart';
-import 'package:orange_wallet_mobile/models/list_transaction.dart';
 import 'package:orange_wallet_mobile/view/cadastrar_transacao_button.dart';
-import 'package:orange_wallet_mobile/view/lista_transacoes_container.dart';
+import 'package:orange_wallet_mobile/view/list_transaction_view.dart';
 import 'package:orange_wallet_mobile/view/notification_button.dart';
 import 'package:orange_wallet_mobile/view/receita_despesa_container.dart';
 import 'package:orange_wallet_mobile/view/saldo_container.dart';
@@ -16,20 +14,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool isVisible = false;
-  List<ListTransaction> list = [];
-  var listController = ListTransactionController().findAll();
-
-  @override
-  void initState() {
-    Future.delayed(Duration.zero, () async {
-      list = await listController;
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
+    var receitaContainer = ReceitaDespesaContainer(isReceita: true, isVisible: isVisible);
+    var despesaContainer = ReceitaDespesaContainer(isReceita: false, isVisible: isVisible);
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -112,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: Column(
                       children: [
-                        SaldoContainer(isVisible: isVisible),
+                        SaldoContainer(isVisible: isVisible,),
                         SizedBox(
                           height: mediaQuery.height * 0.02843,
                           width: 0,
@@ -172,34 +162,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
-              child: FutureBuilder(
-                future: listController,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return Column(
-                      children: List<ListaTransacoesContainer>.generate(
-                        list.length > 6 ? 6 : list.length,
-                        (index) {
-                          return ListaTransacoesContainer(
-                              isVisible: isVisible,
-                              valorTransacao: list[index].value,
-                              tituloTransacao: list[index].title,
-                              dataTransacao: list[index].date,
-                              isReceita: list[index].type);
-                        },
-                      ),
-                    );
-                  } else if (snapshot.hasError) {
-                    return const Text(
-                      'Tivemos um problema com a sua requisição.',
-                    );
-                  } else {
-                    return const CircularProgressIndicator(
-                      color: Color(0XFFFF8A00),
-                    );
-                  }
-                },
-              ),
+              child: ListTransactionView(isVisible: isVisible),
             ),
           ],
         ),

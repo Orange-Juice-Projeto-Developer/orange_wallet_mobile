@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-
+import '../controller/list_transaction_controller.dart';
 import '../global/convert.dart';
+import '../models/list_transaction.dart';
 
 class ReceitaDespesaContainer extends StatelessWidget {
   final bool isReceita;
   final bool isVisible;
+
   const ReceitaDespesaContainer(
       {Key? key, required this.isReceita, required this.isVisible})
       : super(key: key);
@@ -12,10 +14,52 @@ class ReceitaDespesaContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
-    const double saldoReceita = 12000.06;
-    const double saldoDespesa = 6000.12;
+    var list = <ListTransaction>[];
+    double saldo = 0;
+
+    Widget carregarSaldo(bool isVisible) {
+      if (isVisible) {
+        return FutureBuilder(
+            future: getTypeList(),
+            builder: (_, snapshot) {
+              if (snapshot.hasData &&
+                  snapshot.connectionState == ConnectionState.done) {
+                list = snapshot.data as List<ListTransaction>;
+                saldo = showSaldo(lista: list);
+                return Text(
+                  Convert.currency(valor: saldo),
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: isReceita
+                          ? const Color(0XFFDCFFA4)
+                          : const Color(0XFFFFCAA4)),
+                );
+              } else if (snapshot.hasError) {
+                return const Text('Erro');
+              } else {
+                return Text(
+                  'Loading...',
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: isReceita
+                          ? const Color(0XFFDCFFA4)
+                          : const Color(0XFFFFCAA4)),
+                );
+              }
+            });
+      } else {
+        return Text(
+          '*******',
+          style: TextStyle(
+              fontSize: 18,
+              color: isReceita
+                  ? const Color(0XFFDCFFA4)
+                  : const Color(0XFFFFCAA4)),
+        );
+      }
+    }
+
     return Container(
-      // padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
       height: mediaQuery.height * 0.08412,
       decoration: BoxDecoration(
         color: const Color(0XFF383838),
@@ -34,73 +78,48 @@ class ReceitaDespesaContainer extends StatelessWidget {
               style: const TextStyle(fontSize: 14, color: Colors.white),
             ),
           ),
-          Row(
-            children: [
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'R\$  ',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: isReceita
-                              ? const Color(0XFFDCFFA4)
-                              : const Color(0XFFFFCAA4)),
-                    ),
-                    TextSpan(
-                      text: _receitaOuDespesa(
-                        isReceita,
-                        isVisible,
-                        saldoReceita,
-                        saldoDespesa,
-                      ),
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: isReceita
-                              ? const Color(0XFFDCFFA4)
-                              : const Color(0XFFFFCAA4)),
-                    ),
-                  ],
-                ),
+          Row(children: [
+            Text(
+              'R\$  ',
+              style: TextStyle(
+                  fontSize: 16,
+                  color: isReceita
+                      ? const Color(0XFFDCFFA4)
+                      : const Color(0XFFFFCAA4)),
+            ),
+            carregarSaldo(isVisible),
+            const Spacer(),
+            Align(
+              alignment: const Alignment(2, 1),
+              heightFactor: 0.5,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10.0),
+                child: Image.asset(
+                    isAntiAlias: true,
+                    width: 30,
+                    height: 30,
+                    alignment: Alignment.topCenter,
+                    fit: BoxFit.fill,
+                    isReceita
+                        ? 'assets/images/Receita.png'
+                        : 'assets/images/Despesa.png'),
               ),
-              const Spacer(),
-              Align(
-                alignment: const Alignment(2, 1),
-                heightFactor: 0.5,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: Image.asset(
-                      isAntiAlias: true,
-                      width: 30,
-                      height: 30,
-                      alignment: Alignment.topCenter,
-                      fit: BoxFit.fill,
-                      isReceita
-                          ? 'assets/images/Receita.png'
-                          : 'assets/images/Despesa.png'),
-                ),
-              ),
-            ],
-          )
+            ),
+          ]),
         ]),
       ),
     );
   }
 
-  String _receitaOuDespesa(
-      bool isReceita, bool isVisible, double receita, double despesa) {
-    String retorno = '';
-    if (isVisible == true) {
-      if (isReceita == true) {
-        final receitaString = Convert.currency(valor: receita);
-        retorno = receitaString;
-      } else if (isReceita == false) {
-        final despesaString = Convert.currency(valor: despesa);
-        retorno = despesaString;
-      }
-    } else {
-      retorno = '*******';
+  double showSaldo({required List<ListTransaction> lista}) {
+    double saldo = 0.0;
+    for (var objeto in lista) {
+      saldo += objeto.value;
     }
-    return retorno;
+    return saldo;
   }
+
+  Future<List<ListTransaction>> getTypeList() async =>
+      await ListTransactionController()
+          .findByType(isReceita ? 'Receita' : 'Despesa');
 }
