@@ -28,7 +28,8 @@ class SaldoContainer extends StatelessWidget {
               } else if (snapshot.hasError) {
                 return const Text('Erro');
               } else {
-                return const Text('Loading...');
+                return const Text('Loading...',
+                    style: TextStyle(fontSize: 32, color: Colors.white));
               }
             });
       } else {
@@ -61,13 +62,11 @@ class SaldoContainer extends StatelessWidget {
               ),
             ),
             Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                const Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Text(
-                    'R\$  ',
-                    style: TextStyle(fontSize: 24, color: Colors.white),
-                  ),
+                const Text(
+                  'R\$  ',
+                  style: TextStyle(fontSize: 24, color: Colors.white),
                 ),
                 carregarSaldo(isVisible),
                 const SizedBox(
@@ -83,6 +82,9 @@ class SaldoContainer extends StatelessWidget {
                       alignment: Alignment.topCenter,
                       fit: BoxFit.contain,
                       'assets/images/Dinheiro-Transparente.png'),
+                ),
+                const SizedBox(
+                  width: 44,
                 ),
               ],
             )

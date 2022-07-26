@@ -78,7 +78,8 @@ class ReceitaDespesaContainer extends StatelessWidget {
               style: const TextStyle(fontSize: 14, color: Colors.white),
             ),
           ),
-          Row(children: [
+          Row(crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
             Text(
               'R\$  ',
               style: TextStyle(
