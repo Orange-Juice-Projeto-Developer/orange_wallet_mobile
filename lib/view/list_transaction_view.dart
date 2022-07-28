@@ -14,7 +14,7 @@ class ListTransactionView extends StatefulWidget {
 }
 
 class _ListTransactionViewState extends State<ListTransactionView> {
-  var listController = ListTransactionController().findAll();
+  var listController = ListTransactionController().findByRecent();
   List<ListTransaction> list = [];
   @override
   void initState() {

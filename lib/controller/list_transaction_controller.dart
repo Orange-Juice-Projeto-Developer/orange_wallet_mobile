@@ -14,7 +14,49 @@ class ListTransactionController {
 
   Future<List<ListTransaction>> findAll() async {
     final listTransaction = await _listTransactionRepository.findAll();
-    return listTransaction.reversed.toList();
+    return listTransaction.toList();
+  }
+
+  Future<List<ListTransaction>> findByRecent() async {
+    final listTransaction = await _listTransactionRepository.findAll();
+
+    listTransaction.sort((item1, item2) {
+      //   "date": "2022-07-09T00:17:54.575Z"
+
+      final transacaoDados1 = item1.date.substring(0, 10).split('-');
+      final transacaoDados2 = item2.date.substring(0, 10).split('-');
+
+      final ano1 = int.parse(transacaoDados1[0]);
+      final ano2 = int.parse(transacaoDados2[0]);
+
+      final mes1 = int.parse(transacaoDados1[1]);
+      final mes2 = int.parse(transacaoDados2[1]);
+
+      final dia1 = int.parse(transacaoDados1[2]);
+      final dia2 = int.parse(transacaoDados2[2]);
+
+      if (ano1 < ano2) {
+        return 1;
+      } else if (ano1 == ano2) {
+        if (mes1 < mes2) {
+          return 1;
+        } else if (mes1 == mes2) {
+          if (dia1 < dia2) {
+            return 1;
+          } else if (dia1 == dia2) {
+            return 0;
+          } else {
+            return -1;
+          }
+        } else {
+          return -1;
+        }
+      } else {
+        return -1;
+      }
+    });
+    print(listTransaction);
+    return listTransaction.toList();
   }
 
   Future<List<ListTransaction>> findByType(String type) async {
@@ -42,5 +84,21 @@ class ListTransactionController {
       }
     }
     return receitaSaldo - despesaSaldo;
+  }
+
+  Future<void> saveData(
+      {required String title,
+      required String value,
+      required String type,
+      required String category,
+      required String date}) async {
+    final transacao = ListTransaction(
+        title: title,
+        value: double.parse(value),
+        type: type,
+        category: category,
+        date: date);
+
+    await _listTransactionRepository.insert(transacao);
   }
 }

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-class ListTransaction {
+class ListTransaction implements Comparable<ListTransaction> {
   // {
   //   "id": "6abf85b6-e909-4b0b-8e84-8d3a7e4fab08",
   //   "title": "Salário",
@@ -10,7 +10,7 @@ class ListTransaction {
   //   "date": "2022-07-09T00:17:54.575Z"
   // },
 
-  String id;
+  //String id;
   String title;
   double value;
   String type;
@@ -18,7 +18,7 @@ class ListTransaction {
   String date;
 
   ListTransaction(
-      {required this.id,
+      { // required this.id,
       required this.title,
       required this.value,
       required this.type,
@@ -27,7 +27,7 @@ class ListTransaction {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      //'id': id,
       'title': title,
       'value': value,
       'type': type,
@@ -38,7 +38,7 @@ class ListTransaction {
 
   factory ListTransaction.fromMap(Map<String, dynamic> map) {
     return ListTransaction(
-      id: map['id'] ?? '',
+      //id: map['id'] ?? '',
       title: map['title'] ?? '',
       value: map['value']?.toDouble() ?? 0.0,
       type: map['type'] ?? '',
@@ -54,6 +54,11 @@ class ListTransaction {
 
   @override
   String toString() {
-    return 'ListTransaction(id: $id, title: $title, value: $value, type: $type, category: $category, date: $date)';
+    return 'ListTransaction(title: $title, value: $value, type: $type, category: $category, date: $date)';
+  }
+
+  @override
+  int compareTo(ListTransaction other) {
+    return date.compareTo(other.date);
   }
 }

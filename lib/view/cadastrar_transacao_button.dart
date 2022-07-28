@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:orange_wallet_mobile/controller/list_transaction_controller.dart';
+import 'package:orange_wallet_mobile/view/category_dropdown.dart';
 
 class CadastrarTransacaoButton extends StatefulWidget {
   const CadastrarTransacaoButton({Key? key}) : super(key: key);
@@ -11,16 +13,27 @@ class CadastrarTransacaoButton extends StatefulWidget {
 class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
   bool _receita = true;
   TextEditingController dataController = TextEditingController();
+  TextEditingController valueController = TextEditingController();
+  var categoryController;
+  TextEditingController titleController = TextEditingController();
+  TextEditingController typeController = TextEditingController();
 
   @override
   void dispose() {
     dataController.dispose();
+    valueController.dispose();
+    categoryController.dispose();
+    titleController.dispose();
+    typeController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
+    // var teste = CategoryDropdown(isReceita: _receita);
+    // categoryController = teste.currentValue
+    var connection = ListTransactionController();
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
         fixedSize: Size(mediaQuery.width, mediaQuery.height * .05687),
@@ -173,6 +186,7 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                             ),
                           ),
                           TextFormField(
+                            controller: titleController,
                             cursorColor: const Color(0XFFFF8A00),
                             decoration: InputDecoration(
                               focusedBorder: const OutlineInputBorder(
@@ -218,6 +232,7 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                       ),
                                     ),
                                     TextFormField(
+                                      controller: valueController,
                                       cursorColor: const Color(0XFFFF8A00),
                                       keyboardType: TextInputType.number,
                                       decoration: InputDecoration(
@@ -348,59 +363,7 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                               ),
                             ),
                           ),
-                          DropdownButtonFormField<String>(
-                            dropdownColor: const Color(0XFF383838),
-                            isDense: true,
-                            items: const [
-                              DropdownMenuItem(
-                                value: 'carro',
-                                child: Text(
-                                  'Combustível',
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'compras',
-                                child: Text(
-                                  'Mantimentos',
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'alimento',
-                                child: Text(
-                                  'Alimentação',
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'essenciais',
-                                child: Text(
-                                  'Água/Luz/Internet/Telefone',
-                                ),
-                              ),
-                            ],
-                            onChanged: (String? value) {},
-                            decoration: InputDecoration(
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0XFFFF8A00))),
-                              isDense: true,
-                              filled: true,
-                              hintText: 'Selecione a categoria',
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide:
-                                    const BorderSide(color: Colors.grey),
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              border: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(8)),
-                            ),
-                          ),
+                          CategoryDropdown(isReceita: _receita),
                           const SizedBox(
                             height: 27,
                             width: 0,
@@ -416,7 +379,52 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                 ),
                                 fixedSize: Size(mediaQuery.width, 48),
                                 primary: const Color(0XFFFF8A00)),
-                            onPressed: () {},
+                            onPressed: () async {
+                              if (_receita) {
+                                typeController.text = 'Receita';
+                              } else {
+                                typeController.text = 'Despesa';
+                              }
+
+                              await connection.saveData(
+                                  title: titleController.text,
+                                  value: valueController.text,
+                                  type: typeController.text,
+                                  category: 'Salário',
+                                  date:
+                                      '${dataController.text.split('/').reversed.join('-')}T00:17:54.575Z');
+
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                        title: const Text(
+                                          'Transação cadastrado com sucesso',
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                        backgroundColor: Colors.black,
+                                        actions: [
+                                          ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(24),
+                                                ),
+                                                primary:
+                                                    const Color(0XFFFF8A00)),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                              Navigator.of(context).pop();
+                                              dataController.clear();
+                                              typeController.clear();
+                                              valueController.clear();
+                                              titleController.clear();
+                                            },
+                                            child: const Text('OK'),
+                                          )
+                                        ]);
+                                  });
+                            },
                             child: const Text(
                               'CADASTRAR',
                               style:
