@@ -7,6 +7,8 @@ class ListaTransacoesContainer extends StatelessWidget {
   final String isReceita;
   final bool isVisible;
   final double valorTransacao;
+  final bool isFirst;
+  final bool isLast;
 
   const ListaTransacoesContainer(
       {Key? key,
@@ -14,19 +16,25 @@ class ListaTransacoesContainer extends StatelessWidget {
       required this.valorTransacao,
       required this.tituloTransacao,
       required this.dataTransacao,
-      required this.isReceita})
+      required this.isReceita,
+      required this.isFirst,
+      required this.isLast})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
+      padding: const EdgeInsets.only(bottom: 2.0),
       child: Container(
         height: mediaQuery.height * 0.09004,
         decoration: BoxDecoration(
           color: const Color(0XFF383838),
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: isFirst
+              ? const BorderRadius.vertical(top: Radius.circular(15))
+              : isLast
+                  ? const BorderRadius.vertical(bottom: Radius.circular(15))
+                  : null,
         ),
         child: Row(
           children: [

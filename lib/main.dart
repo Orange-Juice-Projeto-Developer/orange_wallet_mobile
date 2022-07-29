@@ -27,11 +27,11 @@ class MyApp extends StatelessWidget {
       title: 'Orange Wallet',
       theme: ThemeData(
         inputDecorationTheme: const InputDecorationTheme(
-          hintStyle: TextStyle(color: Colors.white),
+          hintStyle: TextStyle(color: Colors.grey),
           fillColor: Color(0XFF383838),
           filled: true,
         ),
-        cardColor: Colors.grey,
+        cardColor: Colors.grey.shade600,
         textTheme: const TextTheme(
           subtitle1: TextStyle(),
           bodyText1: TextStyle(),

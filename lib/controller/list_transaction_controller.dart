@@ -55,7 +55,6 @@ class ListTransactionController {
         return -1;
       }
     });
-    print(listTransaction);
     return listTransaction.toList();
   }
 

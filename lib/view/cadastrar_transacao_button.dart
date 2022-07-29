@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:orange_wallet_mobile/controller/list_transaction_controller.dart';
-import 'package:orange_wallet_mobile/view/category_dropdown.dart';
 
 class CadastrarTransacaoButton extends StatefulWidget {
   const CadastrarTransacaoButton({Key? key}) : super(key: key);
@@ -14,15 +13,15 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
   bool _receita = true;
   TextEditingController dataController = TextEditingController();
   TextEditingController valueController = TextEditingController();
-  var categoryController;
+  String categoryController = '';
   TextEditingController titleController = TextEditingController();
   TextEditingController typeController = TextEditingController();
+  var formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     dataController.dispose();
     valueController.dispose();
-    categoryController.dispose();
     titleController.dispose();
     typeController.dispose();
     super.dispose();
@@ -31,9 +30,186 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
-    // var teste = CategoryDropdown(isReceita: _receita);
-    // categoryController = teste.currentValue
+
     var connection = ListTransactionController();
+
+    DropdownButtonFormField<String> dropdownCategory() {
+      if (_receita) {
+        return DropdownButtonFormField<String>(
+            dropdownColor: Colors.grey[800],
+            decoration: InputDecoration(
+              focusedBorder: const OutlineInputBorder(
+                  borderSide: BorderSide(color: Color(0XFFFF8A00))),
+              isDense: true,
+              filled: true,
+              hintText: 'Selecione a categoria',
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+                borderSide: const BorderSide(color: Colors.grey),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              border: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(8)),
+            ),
+            items: const [
+              DropdownMenuItem(
+                value: 'Salário',
+                child: Text('Salário'),
+              ),
+              DropdownMenuItem(
+                value: '13º Salário',
+                child: Text('13º Salário'),
+              ),
+              DropdownMenuItem(
+                value: 'Aluguéis',
+                child: Text('Aluguéis'),
+              ),
+              DropdownMenuItem(
+                value: 'Férias',
+                child: Text('Férias'),
+              ),
+              DropdownMenuItem(
+                value: 'Renda extra',
+                child: Text('Renda extra'),
+              ),
+              DropdownMenuItem(
+                value: 'Renda de Investimento',
+                child: Text('Renda de investimento'),
+              ),
+              DropdownMenuItem(
+                value: 'Rendimentos bancários',
+                child: Text('Rendimentos bancários'),
+              ),
+            ],
+            onChanged: (valueSelected) {
+              categoryController = valueSelected ?? '';
+            });
+      } else {
+        return DropdownButtonFormField<String>(
+          dropdownColor: Colors.grey[800],
+          decoration: InputDecoration(
+            focusedBorder: const OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0XFFFF8A00))),
+            isDense: true,
+            filled: true,
+            hintText: 'Selecione a categoria',
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Colors.grey),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            border: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.circular(8)),
+          ),
+          onChanged: (value) {
+            categoryController = value ?? '';
+          },
+          items: const [
+            DropdownMenuItem(
+              value: 'Alimentação',
+              child: Text('Alimentação'),
+            ),
+            DropdownMenuItem(
+              value: 'Combustível',
+              child: Text('Combustível'),
+            ),
+            DropdownMenuItem(
+              value: 'Despesas pessoais',
+              child: Text('Despesas pessoais'),
+            ),
+            DropdownMenuItem(
+              value: 'Educação',
+              child: Text('Educação'),
+            ),
+            DropdownMenuItem(
+              value: 'Empréstimos',
+              child: Text('Empréstimos'),
+            ),
+            DropdownMenuItem(
+              value: 'Estacionamento',
+              child: Text('Estacionamento'),
+            ),
+            DropdownMenuItem(
+              value: 'Farmácia',
+              child: Text('Farmácia'),
+            ),
+            DropdownMenuItem(
+              value: 'Internet',
+              child: Text('Internet'),
+            ),
+            DropdownMenuItem(
+              value: 'IPVA',
+              child: Text('IPVA'),
+            ),
+            DropdownMenuItem(
+              value: 'Lazer',
+              child: Text('Lazer'),
+            ),
+            DropdownMenuItem(
+              value: 'Livros',
+              child: Text('Livros'),
+            ),
+            DropdownMenuItem(
+              value: 'Manutenção veicular',
+              child: Text('Manutenção veicular'),
+            ),
+            DropdownMenuItem(
+              value: 'Moradia',
+              child: Text('Moradia'),
+            ),
+            DropdownMenuItem(
+              value: 'Pets',
+              child: Text('Pets'),
+            ),
+            DropdownMenuItem(
+              value: 'Presentes',
+              child: Text('Presentes'),
+            ),
+            DropdownMenuItem(
+              value: 'Saúde',
+              child: Text('Saúde'),
+            ),
+            DropdownMenuItem(
+              value: 'Seguro',
+              child: Text('Seguro'),
+            ),
+            DropdownMenuItem(
+              value: 'Stream',
+              child: Text('Stream'),
+            ),
+            DropdownMenuItem(
+              value: 'Tecnologia',
+              child: Text('Tecnologia'),
+            ),
+            DropdownMenuItem(
+              value: 'Telefonia',
+              child: Text('Telefonia'),
+            ),
+            DropdownMenuItem(
+              value: 'Transporte',
+              child: Text('Transporte'),
+            ),
+            DropdownMenuItem(
+              value: 'Vestuário',
+              child: Text('Vestuário'),
+            ),
+            DropdownMenuItem(
+              value: 'Viagens',
+              child: Text('Viagens'),
+            ),
+          ],
+        );
+      }
+    }
+
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
         fixedSize: Size(mediaQuery.width, mediaQuery.height * .05687),
@@ -96,7 +272,7 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                           ),
                           const SizedBox(
                             width: 0,
-                            height: 32,
+                            height: 20,
                           ),
                           Container(
                             padding: const EdgeInsets.only(
@@ -176,182 +352,7 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                             ),
                           ),
                           const SizedBox(
-                            height: 27,
-                            width: 0,
-                          ),
-                          const Text(
-                            'Transação',
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                          TextFormField(
-                            controller: titleController,
-                            cursorColor: const Color(0XFFFF8A00),
-                            decoration: InputDecoration(
-                              focusedBorder: const OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Color(0XFFFF8A00))),
-                              isDense: true,
-                              filled: true,
-                              hintText:
-                                  'Escreva aqui o título da sua transação',
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide:
-                                    const BorderSide(color: Colors.grey),
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                borderSide:
-                                    const BorderSide(color: Colors.grey),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              border: OutlineInputBorder(
-                                  borderSide:
-                                      const BorderSide(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(8)),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 18,
-                            width: 0,
-                          ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(bottom: 6.0),
-                                      child: Text(
-                                        'Valor',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                    TextFormField(
-                                      controller: valueController,
-                                      cursorColor: const Color(0XFFFF8A00),
-                                      keyboardType: TextInputType.number,
-                                      decoration: InputDecoration(
-                                        focusedBorder: const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0XFFFF8A00))),
-                                        isDense: true,
-                                        filled: true,
-                                        hintText: 'R\$ 0,00',
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          borderSide: const BorderSide(
-                                              color: Colors.grey),
-                                        ),
-                                        disabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        border: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 0,
-                                width: 17.49,
-                              ),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(bottom: 6.0),
-                                      child: Text(
-                                        'Data',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                    TextFormField(
-                                      cursorColor: const Color(0XFFFF8A00),
-                                      controller: dataController,
-                                      keyboardType: TextInputType.none,
-                                      onTap: () async {
-                                        DateTime? date = await showDatePicker(
-                                          builder: (context, child) {
-                                            return Theme(
-                                                data:
-                                                    Theme.of(context).copyWith(
-                                                  dialogBackgroundColor:
-                                                      Colors.black,
-                                                  colorScheme:
-                                                      const ColorScheme.light(
-                                                          primary:
-                                                              Color(0XFF383838),
-                                                          onPrimary:
-                                                              Colors.white,
-                                                          onSurface:
-                                                              Colors.white),
-                                                ),
-                                                child: child!);
-                                          },
-                                          locale: const Locale('pt', 'BR'),
-                                          context: context,
-                                          initialDate: DateTime.now(),
-                                          firstDate: DateTime(2020),
-                                          lastDate: DateTime.now(),
-                                        );
-                                        dataController.text = date
-                                                ?.toString()
-                                                .substring(0, 10)
-                                                .split('-')
-                                                .reversed
-                                                .join('/') ??
-                                            '';
-                                      },
-                                      decoration: InputDecoration(
-                                        focusedBorder: const OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Color(0XFFFF8A00))),
-                                        focusColor: const Color(0XFFFF8A00),
-                                        isDense: true,
-                                        filled: true,
-                                        hintText: '01/01/2020',
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          borderSide: const BorderSide(
-                                              color: Colors.grey),
-                                        ),
-                                        disabledBorder: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                              color: Colors.grey),
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        border: OutlineInputBorder(
-                                            borderSide: const BorderSide(
-                                                color: Colors.grey),
-                                            borderRadius:
-                                                BorderRadius.circular(8)),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 27,
+                            height: 20,
                             width: 0,
                           ),
                           const Padding(
@@ -363,74 +364,395 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                               ),
                             ),
                           ),
-                          CategoryDropdown(isReceita: _receita),
-                          const SizedBox(
-                            height: 27,
-                            width: 0,
-                          ),
+                          dropdownCategory(),
                           const SizedBox(
                             height: 20,
                             width: 0,
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(24),
-                                ),
-                                fixedSize: Size(mediaQuery.width, 48),
-                                primary: const Color(0XFFFF8A00)),
-                            onPressed: () async {
-                              if (_receita) {
-                                typeController.text = 'Receita';
-                              } else {
-                                typeController.text = 'Despesa';
-                              }
-
-                              await connection.saveData(
-                                  title: titleController.text,
-                                  value: valueController.text,
-                                  type: typeController.text,
-                                  category: 'Salário',
-                                  date:
-                                      '${dataController.text.split('/').reversed.join('-')}T00:17:54.575Z');
-
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                        title: const Text(
-                                          'Transação cadastrado com sucesso',
-                                          style: TextStyle(color: Colors.white),
-                                        ),
-                                        backgroundColor: Colors.black,
-                                        actions: [
-                                          ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(24),
-                                                ),
-                                                primary:
-                                                    const Color(0XFFFF8A00)),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                              Navigator.of(context).pop();
-                                              dataController.clear();
-                                              typeController.clear();
-                                              valueController.clear();
-                                              titleController.clear();
-                                            },
-                                            child: const Text('OK'),
-                                          )
-                                        ]);
-                                  });
-                            },
-                            child: const Text(
-                              'CADASTRAR',
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 16),
+                          const Padding(
+                            padding: EdgeInsets.only(bottom: 8.0),
+                            child: Text(
+                              'Transação',
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
                             ),
                           ),
+                          Form(
+                              key: formKey,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 80,
+                                    child: TextFormField(
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Valor não pode ser nulo';
+                                        }
+                                      },
+                                      controller: titleController,
+                                      cursorColor: const Color(0XFFFF8A00),
+                                      decoration: InputDecoration(
+                                        errorBorder: null,
+                                        focusedBorder: const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Color(0XFFFF8A00))),
+                                        isDense: true,
+                                        filled: true,
+                                        hintText:
+                                            'Escreva aqui o título da sua transação',
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          borderSide: const BorderSide(
+                                              color: Colors.grey),
+                                        ),
+                                        disabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: Colors.grey),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        border: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                                color: Colors.grey),
+                                            borderRadius:
+                                                BorderRadius.circular(8)),
+                                      ),
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Padding(
+                                              padding:
+                                                  EdgeInsets.only(bottom: 6.0),
+                                              child: Text(
+                                                'Valor',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 80,
+                                              child: TextFormField(
+                                                autovalidateMode:
+                                                    AutovalidateMode
+                                                        .onUserInteraction,
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return 'Valor não pode ser nulo';
+                                                  }
+                                                },
+                                                controller: valueController,
+                                                cursorColor:
+                                                    const Color(0XFFFF8A00),
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                decoration: InputDecoration(
+                                                  focusedBorder:
+                                                      const OutlineInputBorder(
+                                                          borderSide: BorderSide(
+                                                              color: Color(
+                                                                  0XFFFF8A00))),
+                                                  isDense: true,
+                                                  filled: true,
+                                                  hintText: 'R\$ 0,00',
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            color: Colors.grey),
+                                                  ),
+                                                  disabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            color: Colors.grey),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  border: OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                              color:
+                                                                  Colors.grey),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8)),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 0,
+                                        width: 17.49,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Padding(
+                                              padding:
+                                                  EdgeInsets.only(bottom: 6.0),
+                                              child: Text(
+                                                'Data',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 80,
+                                              child: TextFormField(
+                                                autovalidateMode:
+                                                    AutovalidateMode
+                                                        .onUserInteraction,
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return 'Valor não pode ser nulo';
+                                                  }
+                                                },
+                                                cursorColor:
+                                                    const Color(0XFFFF8A00),
+                                                controller: dataController,
+                                                keyboardType:
+                                                    TextInputType.none,
+                                                onTap: () async {
+                                                  DateTime? date =
+                                                      await showDatePicker(
+                                                    builder: (context, child) {
+                                                      return Theme(
+                                                          data:
+                                                              Theme.of(context)
+                                                                  .copyWith(
+                                                            dialogBackgroundColor:
+                                                                Colors.black,
+                                                            colorScheme: const ColorScheme.light(
+                                                                primary: Color(
+                                                                    0XFF383838),
+                                                                onPrimary:
+                                                                    Colors
+                                                                        .white,
+                                                                onSurface:
+                                                                    Colors
+                                                                        .white),
+                                                          ),
+                                                          child: child!);
+                                                    },
+                                                    locale: const Locale(
+                                                        'pt', 'BR'),
+                                                    context: context,
+                                                    initialDate: DateTime.now(),
+                                                    firstDate: DateTime(2020),
+                                                    lastDate: DateTime.now(),
+                                                  );
+                                                  dataController.text = date
+                                                          ?.toString()
+                                                          .substring(0, 10)
+                                                          .split('-')
+                                                          .reversed
+                                                          .join('/') ??
+                                                      '';
+                                                },
+                                                decoration: InputDecoration(
+                                                  focusedBorder:
+                                                      const OutlineInputBorder(
+                                                          borderSide: BorderSide(
+                                                              color: Color(
+                                                                  0XFFFF8A00))),
+                                                  focusColor:
+                                                      const Color(0XFFFF8A00),
+                                                  isDense: true,
+                                                  filled: true,
+                                                  hintText: '01/01/2020',
+                                                  enabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            color: Colors.grey),
+                                                  ),
+                                                  disabledBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                            color: Colors.grey),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                  ),
+                                                  border: OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                              color:
+                                                                  Colors.grey),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8)),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                    width: 0,
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(24),
+                                        ),
+                                        fixedSize: Size(mediaQuery.width, 48),
+                                        primary: const Color(0XFFFF8A00)),
+                                    onPressed: () async {
+                                      if (_receita) {
+                                        typeController.text = 'Receita';
+                                      } else {
+                                        typeController.text = 'Despesa';
+                                      }
+
+                                      var validate =
+                                          formKey.currentState?.validate() ??
+                                              false;
+
+                                      if (validate) {
+                                        await connection.saveData(
+                                            title: titleController.text,
+                                            value: valueController.text,
+                                            type: typeController.text,
+                                            category: categoryController,
+                                            date:
+                                                '${dataController.text.split('/').reversed.join('-')}T00:17:54.575Z');
+                                      }
+
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            Dialog savedDialog = Dialog(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              child: Container(
+                                                height: 216,
+                                                width: 390,
+                                                decoration: const BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                30)),
+                                                    gradient: LinearGradient(
+                                                        begin:
+                                                            Alignment.topCenter,
+                                                        end: Alignment
+                                                            .bottomCenter,
+                                                        colors: [
+                                                          Color(0XFF2F2F2F),
+                                                          Color(0XFF131313),
+                                                        ])),
+                                                child: Column(
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.topRight,
+                                                      child: IconButton(
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop;
+                                                          },
+                                                          icon: const Icon(
+                                                              Icons.close,
+                                                              color: Colors
+                                                                  .white)),
+                                                    ),
+                                                    const SizedBox(height: 8,),
+                                                    const Text(
+                                                      'Transação cadastrada',
+                                                      style: TextStyle(
+                                                          fontSize: 24),
+                                                    ),
+                                                    const Text(
+                                                      'com sucesso',
+                                                      style: TextStyle(
+                                                          fontSize: 24),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 32,
+                                                    ),
+                                                    ElevatedButton(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                              fixedSize:
+                                                                  const Size(
+                                                                      241, 48),
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            24),
+                                                              ),
+                                                              primary: const Color(
+                                                                  0XFFFF8A00)),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                        dataController.clear();
+                                                        typeController.clear();
+                                                        valueController.clear();
+                                                        titleController.clear();
+                                                      },
+                                                      child: const Text(
+                                                        'OK',
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            );
+                                            return savedDialog;
+                                          });
+                                    },
+                                    child: const Text(
+                                      'CADASTRAR',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 16),
+                                    ),
+                                  ),
+                                ],
+                              )),
                         ],
                       ),
                     ),

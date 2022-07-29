@@ -35,7 +35,24 @@ class _ListTransactionViewState extends State<ListTransactionView> {
             children: List<ListaTransacoesContainer>.generate(
               list.length > 6 ? 6 : list.length,
               (index) {
+                list.take(6);
+                bool isFirst;
+                bool isLast;
+
+                if (list.first == list[index]) {
+                  isFirst = true;
+                } else {
+                  isFirst = false;
+                }
+                if (list[5] == list[index]) {
+                  isLast = true;
+                } else {
+                  isLast = false;
+                }
+
                 return ListaTransacoesContainer(
+                    isLast: isLast,
+                    isFirst: isFirst,
                     isVisible: widget.isVisible,
                     valorTransacao: list[index].value,
                     tituloTransacao: list[index].title,
