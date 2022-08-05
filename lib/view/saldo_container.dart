@@ -1,45 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:orange_wallet_mobile/controller/list_transaction_controller.dart';
-
 import '../global/convert.dart';
 
-class SaldoContainer extends StatelessWidget {
+class SaldoContainer extends StatefulWidget {
   const SaldoContainer({Key? key, required this.isVisible}) : super(key: key);
   final bool isVisible;
 
   @override
+  State<SaldoContainer> createState() => _SaldoContainerState();
+}
+
+class _SaldoContainerState extends State<SaldoContainer> {
+  double saldoController = 0.0;
+  double saldo = 0.0;
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, () async {
+      saldoController = await ListTransactionController().getSaldo();
+      // saldo = await saldoController;
+    });
+
+    // setState(() {});
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
-    double saldo = 0;
-    final saldoController = ListTransactionController().getSaldo();
 
-    Widget carregarSaldo(bool isVisible) {
-      if (isVisible) {
-        return FutureBuilder(
-            future: saldoController,
-            builder: (_, snapshot) {
-              if (snapshot.hasData &&
-                  snapshot.connectionState == ConnectionState.done) {
-                saldo = snapshot.data as double;
-                return Text(
-                  Convert.currency(valor: saldo),
-                  style: const TextStyle(fontSize: 32, color: Colors.white),
-                );
-              } else if (snapshot.hasError) {
-                return const Text('Erro');
-              } else {
-                return const Text('Loading...',
-                    style: TextStyle(fontSize: 32, color: Colors.white));
-              }
-            });
-      } else {
-        return const Text(
-          '*******',
-          style: TextStyle(fontSize: 32, color: Colors.white),
-        );
-      }
-    }
-
+    // Widget carregarSaldo(bool isVisible) {
+    //   if (isVisible) {
+    //     return
+    //   } else {
+    //     return const Text(
+    //       '*******',
+    //       style: TextStyle(fontSize: 32, color: Colors.white),
+    //     );
+    //   }
+    // }
+    setState(() {
+      saldo = saldoController;
+    });
     return Container(
       height: mediaQuery.height * 0.11729,
       decoration: BoxDecoration(
@@ -68,7 +70,16 @@ class SaldoContainer extends StatelessWidget {
                   'R\$  ',
                   style: TextStyle(fontSize: 24, color: Colors.white),
                 ),
-                carregarSaldo(isVisible),
+                Visibility(
+                  maintainState: true,
+                  visible: widget.isVisible,
+                  replacement: const Text('*******',
+                      style: TextStyle(fontSize: 32, color: Colors.white)),
+                  child: Text(
+                    Convert.currency(valor: saldo),
+                    style: const TextStyle(fontSize: 32, color: Colors.white),
+                  ),
+                ),
                 const SizedBox(
                   width: 16,
                 ),
@@ -94,3 +105,21 @@ class SaldoContainer extends StatelessWidget {
     );
   }
 }
+
+// FutureBuilder(
+//             future: saldoController,
+//             builder: (_, snapshot) {
+//               if (snapshot.hasData &&
+//                   snapshot.connectionState == ConnectionState.done) {
+//                 saldo = snapshot.data as double;
+//                 return Text(
+//                   Convert.currency(valor: saldo),
+//                   style: const TextStyle(fontSize: 32, color: Colors.white),
+//                 );
+//               } else if (snapshot.hasError) {
+//                 return const Text('Erro');
+//               } else {
+//                 return const Text('Loading...',
+//                     style: TextStyle(fontSize: 32, color: Colors.white));
+//               }
+//             });

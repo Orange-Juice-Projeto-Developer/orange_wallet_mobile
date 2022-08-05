@@ -1,3 +1,4 @@
+import 'package:orange_wallet_mobile/models/category.dart';
 import 'package:orange_wallet_mobile/repositories/list_transaction_repository.dart';
 
 import '../models/list_transaction.dart';
@@ -58,16 +59,16 @@ class ListTransactionController {
     return listTransaction.toList();
   }
 
-  Future<List<ListTransaction>> findByType(String type) async {
+  Future<List<ListTransaction>> findByCategoryType(String type) async {
     final listTransaction = await _listTransactionRepository.findAll();
-    List<ListTransaction> listType = [];
+    List<ListTransaction> listCategoryType = [];
 
     for (var objeto in listTransaction) {
-      if (objeto.type == type) {
-        listType.add(objeto);
+      if (objeto.category.categoryType == type) {
+        listCategoryType.add(objeto);
       }
     }
-    return listType;
+    return listCategoryType;
   }
 
   Future<double> getSaldo() async {
@@ -76,28 +77,46 @@ class ListTransactionController {
     double despesaSaldo = 0;
 
     for (var objeto in listTransaction) {
-      if (objeto.type == 'Receita') {
+      if (objeto.category.categoryType == 'Receita') {
         receitaSaldo += objeto.value;
       } else {
         despesaSaldo += objeto.value;
       }
     }
-    return receitaSaldo - despesaSaldo;
+    return (receitaSaldo - despesaSaldo).toDouble();
   }
 
-  Future<void> saveData(
+  Future<double> saldoReceitaDespesa({required bool isReceita}) async {
+    double saldo = 0.0;
+
+    final lista = await findByCategoryType(isReceita ? 'Receita' : 'Despesa');
+    for (var objeto in lista) {
+      saldo += objeto.value;
+    }
+    return saldo;
+  }
+
+  Future<bool> saveData(
       {required String title,
       required String value,
-      required String type,
-      required String category,
+      required Category category,
       required String date}) async {
     final transacao = ListTransaction(
         title: title,
         value: double.parse(value),
-        type: type,
         category: category,
         date: date);
 
-    await _listTransactionRepository.insert(transacao);
+    try {
+      String response = await _listTransactionRepository.insert(transacao);
+
+      if (int.tryParse(response)! >= 200 && int.tryParse(response)! < 300) {
+        return true;
+      } else {
+        return false;
+      }
+    } on Exception {
+      return false;
+    }
   }
 }

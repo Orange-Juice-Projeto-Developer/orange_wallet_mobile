@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:orange_wallet_mobile/pages/home_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:orange_wallet_mobile/pages/all_transactions_page.dart';
 
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
@@ -26,6 +27,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [Locale('pt', 'BR')],
       title: 'Orange Wallet',
       theme: ThemeData(
+        appBarTheme: AppBarTheme(backgroundColor: Colors.grey.shade800),
+        scaffoldBackgroundColor: Colors.black,
         inputDecorationTheme: const InputDecorationTheme(
           hintStyle: TextStyle(color: Colors.grey),
           fillColor: Color(0XFF383838),
@@ -46,7 +49,10 @@ class MyApp extends StatelessWidget {
           buttonColor: Color(0XFFFF8A00),
         ),
       ),
-      home: const HomePage(),
+      routes: {
+        '/': (_) => const HomePage(),
+        '/listTransaction': (_) => const AllTransactionsPage(),
+      },
     );
   }
 }

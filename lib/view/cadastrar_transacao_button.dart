@@ -1,5 +1,9 @@
+import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:orange_wallet_mobile/controller/list_transaction_controller.dart';
+
+import '../models/category.dart';
 
 class CadastrarTransacaoButton extends StatefulWidget {
   const CadastrarTransacaoButton({Key? key}) : super(key: key);
@@ -36,6 +40,11 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
     DropdownButtonFormField<String> dropdownCategory() {
       if (_receita) {
         return DropdownButtonFormField<String>(
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'Valor não pode ser nulo';
+              }
+            },
             dropdownColor: Colors.grey[800],
             decoration: InputDecoration(
               focusedBorder: const OutlineInputBorder(
@@ -90,6 +99,11 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
             });
       } else {
         return DropdownButtonFormField<String>(
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Valor não pode ser nulo';
+            }
+          },
           dropdownColor: Colors.grey[800],
           decoration: InputDecoration(
             focusedBorder: const OutlineInputBorder(
@@ -444,6 +458,15 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                             SizedBox(
                                               height: 80,
                                               child: TextFormField(
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter
+                                                      .digitsOnly,
+                                                  TextInputMask(
+                                                      mask: '9+,99',
+                                                      placeholder: '0',
+                                                      maxPlaceHolders: 3,
+                                                      reverse: true)
+                                                ],
                                                 autovalidateMode:
                                                     AutovalidateMode
                                                         .onUserInteraction,
@@ -457,7 +480,9 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                                 cursorColor:
                                                     const Color(0XFFFF8A00),
                                                 keyboardType:
-                                                    TextInputType.number,
+                                                    const TextInputType
+                                                            .numberWithOptions(
+                                                        decimal: true),
                                                 decoration: InputDecoration(
                                                   focusedBorder:
                                                       const OutlineInputBorder(
@@ -641,109 +666,224 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                               false;
 
                                       if (validate) {
-                                        await connection.saveData(
+                                        bool response = await connection.saveData(
                                             title: titleController.text,
                                             value: valueController.text,
-                                            type: typeController.text,
-                                            category: categoryController,
+                                            category: Category(
+                                                categoryName:
+                                                    categoryController,
+                                                categoryType:
+                                                    typeController.text),
                                             date:
                                                 '${dataController.text.split('/').reversed.join('-')}T00:17:54.575Z');
-                                      }
 
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            Dialog savedDialog = Dialog(
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              child: Container(
-                                                height: 216,
-                                                width: 390,
-                                                decoration: const BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                30)),
-                                                    gradient: LinearGradient(
-                                                        begin:
-                                                            Alignment.topCenter,
-                                                        end: Alignment
-                                                            .bottomCenter,
-                                                        colors: [
-                                                          Color(0XFF2F2F2F),
-                                                          Color(0XFF131313),
-                                                        ])),
-                                                child: Column(
-                                                  children: [
-                                                    Align(
-                                                      alignment:
-                                                          Alignment.topRight,
-                                                      child: IconButton(
-                                                          onPressed: () {
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop;
-                                                          },
-                                                          icon: const Icon(
-                                                              Icons.close,
-                                                              color: Colors
-                                                                  .white)),
-                                                    ),
-                                                    const SizedBox(height: 8,),
-                                                    const Text(
-                                                      'Transação cadastrada',
-                                                      style: TextStyle(
-                                                          fontSize: 24),
-                                                    ),
-                                                    const Text(
-                                                      'com sucesso',
-                                                      style: TextStyle(
-                                                          fontSize: 24),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 32,
-                                                    ),
-                                                    ElevatedButton(
-                                                      style: ElevatedButton
-                                                          .styleFrom(
-                                                              fixedSize:
-                                                                  const Size(
-                                                                      241, 48),
-                                                              shape:
-                                                                  RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
+                                        if (response = true) {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                Dialog savedDialog = Dialog(
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  child: Container(
+                                                    height: 216,
+                                                    width: 390,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius.all(
+                                                                    Radius
                                                                         .circular(
+                                                                            30)),
+                                                            gradient: LinearGradient(
+                                                                begin: Alignment
+                                                                    .topCenter,
+                                                                end: Alignment
+                                                                    .bottomCenter,
+                                                                colors: [
+                                                                  Color(
+                                                                      0XFF2F2F2F),
+                                                                  Color(
+                                                                      0XFF131313),
+                                                                ])),
+                                                    child: Column(
+                                                      children: [
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .topRight,
+                                                          child: IconButton(
+                                                              onPressed: () {
+                                                                Navigator.popUntil(
+                                                                    context,
+                                                                    ModalRoute
+                                                                        .withName(
+                                                                            '/'));
+                                                              },
+                                                              icon: const Icon(
+                                                                  Icons.close,
+                                                                  color: Colors
+                                                                      .white)),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 8,
+                                                        ),
+                                                        const Text(
+                                                          'Transação cadastrada',
+                                                          style: TextStyle(
+                                                              fontSize: 24),
+                                                        ),
+                                                        const Text(
+                                                          'com sucesso',
+                                                          style: TextStyle(
+                                                              fontSize: 24),
+                                                        ),
+                                                        const SizedBox(
+                                                          height: 32,
+                                                        ),
+                                                        ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                                  fixedSize:
+                                                                      const Size(
+                                                                          241, 48),
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
                                                                             24),
-                                                              ),
-                                                              primary: const Color(
-                                                                  0XFFFF8A00)),
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                        dataController.clear();
-                                                        typeController.clear();
-                                                        valueController.clear();
-                                                        titleController.clear();
-                                                      },
-                                                      child: const Text(
-                                                        'OK',
-                                                        style: TextStyle(
-                                                            color:
-                                                                Colors.black),
+                                                                  ),
+                                                                  primary:
+                                                                      const Color(
+                                                                          0XFFFF8A00)),
+                                                          onPressed: () {
+                                                            Navigator.popUntil(
+                                                                context,
+                                                                ModalRoute
+                                                                    .withName(
+                                                                        '/'));
+                                                            dataController
+                                                                .clear();
+                                                            typeController
+                                                                .clear();
+                                                            valueController
+                                                                .clear();
+                                                            titleController
+                                                                .clear();
+                                                          },
+                                                          child: const Text(
+                                                            'OK',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .black),
+                                                          ),
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                                return savedDialog;
+                                              });
+                                        } else {
+                                          const SnackBar(
+                                              content: Text(
+                                                  'Falha de conexão. Tente novamente mais tarde.'));
+                                        }
+                                      } else {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              Dialog savedDialog = Dialog(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                child: Container(
+                                                  height: 216,
+                                                  width: 390,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius.all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          30)),
+                                                          gradient: LinearGradient(
+                                                              begin: Alignment
+                                                                  .topCenter,
+                                                              end: Alignment
+                                                                  .bottomCenter,
+                                                              colors: [
+                                                                Color(
+                                                                    0XFF2F2F2F),
+                                                                Color(
+                                                                    0XFF131313),
+                                                              ])),
+                                                  child: Column(
+                                                    children: [
+                                                      Align(
+                                                        alignment:
+                                                            Alignment.topRight,
+                                                        child: IconButton(
+                                                            onPressed: () {
+                                                              Navigator.popUntil(
+                                                                  context,
+                                                                  ModalRoute
+                                                                      .withName(
+                                                                          '/'));
+                                                            },
+                                                            icon: const Icon(
+                                                                Icons.close,
+                                                                color: Colors
+                                                                    .white)),
                                                       ),
-                                                    )
-                                                  ],
+                                                      const SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      const Text(
+                                                        'Preencha os dados',
+                                                        style: TextStyle(
+                                                            fontSize: 24),
+                                                      ),
+                                                      const Text(
+                                                        'necessários',
+                                                        style: TextStyle(
+                                                            fontSize: 24),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 32,
+                                                      ),
+                                                      ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                                fixedSize:
+                                                                    const Size(
+                                                                        241,
+                                                                        48),
+                                                                shape:
+                                                                    RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              24),
+                                                                ),
+                                                                primary:
+                                                                    const Color(
+                                                                        0XFFFF8A00)),
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: const Text(
+                                                          'OK',
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            );
-                                            return savedDialog;
-                                          });
+                                              );
+                                              return savedDialog;
+                                            });
+                                      }
                                     },
                                     child: const Text(
                                       'CADASTRAR',

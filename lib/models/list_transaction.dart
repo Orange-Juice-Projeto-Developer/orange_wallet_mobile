@@ -1,48 +1,47 @@
 import 'dart:convert';
+import 'category.dart';
 
 class ListTransaction implements Comparable<ListTransaction> {
   // {
-  //   "id": "6abf85b6-e909-4b0b-8e84-8d3a7e4fab08",
-  //   "title": "Salário",
-  //   "value": 1300,
-  //   "type": "Receita",
-  //   "category": "Salário",
-  //   "date": "2022-07-09T00:17:54.575Z"
+  //   "id": "e4a09106-b806-41c0-b4f4-867f0f4cabd1",
+  //   "title": "Yakisoba",
+  //   "value": 39,
+  //   "Category": {
+  //     "categoryName": "Alimentação",
+  //     "categoryType": "Despesa"
+  //   },
+  //   "date": "2022-07-24T10:07:18.145Z"
   // },
 
-  //String id;
+  String? id;
   String title;
   double value;
-  String type;
-  String category;
+  Category category;
   String date;
 
   ListTransaction(
-      { // required this.id,
+      {this.id,
       required this.title,
       required this.value,
-      required this.type,
       required this.category,
       required this.date});
 
   Map<String, dynamic> toMap() {
     return {
-      //'id': id,
+      'id': id,
       'title': title,
       'value': value,
-      'type': type,
-      'category': category,
+      'Category': category.toMap(),
       'date': date,
     };
   }
 
   factory ListTransaction.fromMap(Map<String, dynamic> map) {
     return ListTransaction(
-      //id: map['id'] ?? '',
+      id: map['id'] ?? '',
       title: map['title'] ?? '',
       value: map['value']?.toDouble() ?? 0.0,
-      type: map['type'] ?? '',
-      category: map['category'] ?? '',
+      category: Category.fromMap(map['Category']),
       date: map['date'] ?? '',
     );
   }
@@ -54,7 +53,7 @@ class ListTransaction implements Comparable<ListTransaction> {
 
   @override
   String toString() {
-    return 'ListTransaction(title: $title, value: $value, type: $type, category: $category, date: $date)';
+    return 'ListTransaction(title: $title, value: $value, category: $category, date: $date)';
   }
 
   @override
