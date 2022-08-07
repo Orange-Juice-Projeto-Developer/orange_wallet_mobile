@@ -1,48 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:orange_wallet_mobile/controller/list_transaction_controller.dart';
+import 'package:orange_wallet_mobile/view/loading/shimmer_loading.dart';
 import '../global/convert.dart';
 
-class SaldoContainer extends StatefulWidget {
-  const SaldoContainer({Key? key, required this.isVisible}) : super(key: key);
+class SaldoContainer extends StatelessWidget {
+  const SaldoContainer(
+      {Key? key,
+      required this.isVisible,
+      required this.saldo,
+      required this.isLoading})
+      : super(key: key);
   final bool isVisible;
-
-  @override
-  State<SaldoContainer> createState() => _SaldoContainerState();
-}
-
-class _SaldoContainerState extends State<SaldoContainer> {
-  double saldoController = 0.0;
-  double saldo = 0.0;
-
-  @override
-  void initState() {
-    Future.delayed(Duration.zero, () async {
-      saldoController = await ListTransactionController().getSaldo();
-    });
-
-    super.initState();
-  }
+  final bool isLoading;
+  final double saldo;
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
 
-    setState(() {
-      saldo = saldoController;
-    });
-
-    return Container(
-      height: mediaQuery.height * 0.11729,
-      decoration: BoxDecoration(
-        color: const Color(0XFF383838),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(
-          top: 16.0,
-          left: 8,
-        ),
-        child: Column(
+    Widget _buildText() {
+      if (isLoading) {
+        return ShimmerLoading(
+          isLoading: isLoading,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Container(
+                  width: 126,
+                  height: 16,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    width: 159,
+                    height: 38,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 16,
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Container(
+                      width: 44,
+                      height: 44,
+                      decoration: const BoxDecoration(
+                        color: Colors.black,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 44,
+                  ),
+                ],
+              )
+            ],
+          ),
+        );
+      } else {
+        return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Padding(
@@ -60,9 +88,9 @@ class _SaldoContainerState extends State<SaldoContainer> {
                   style: TextStyle(fontSize: 24, color: Colors.white),
                 ),
                 Visibility(
-                  visible: widget.isVisible,
+                  visible: isVisible,
                   replacement: const Text('*******',
-                  style: TextStyle(fontSize: 32, color: Colors.white)),
+                      style: TextStyle(fontSize: 32, color: Colors.white)),
                   child: Text(
                     Convert.currency(valor: saldo),
                     style: const TextStyle(fontSize: 32, color: Colors.white),
@@ -88,26 +116,23 @@ class _SaldoContainerState extends State<SaldoContainer> {
               ],
             )
           ],
+        );
+      }
+    }
+
+    return Container(
+      height: mediaQuery.height * 0.11729,
+      decoration: BoxDecoration(
+        color: const Color(0XFF383838),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.only(
+          top: 16.0,
+          left: 8,
         ),
+        child: _buildText(),
       ),
     );
   }
 }
-
-// FutureBuilder(
-//             future: saldoController,
-//             builder: (_, snapshot) {
-//               if (snapshot.hasData &&
-//                   snapshot.connectionState == ConnectionState.done) {
-//                 saldo = snapshot.data as double;
-//                 return Text(
-//                   Convert.currency(valor: saldo),
-//                   style: const TextStyle(fontSize: 32, color: Colors.white),
-//                 );
-//               } else if (snapshot.hasError) {
-//                 return const Text('Erro');
-//               } else {
-//                 return const Text('Loading...',
-//                     style: TextStyle(fontSize: 32, color: Colors.white));
-//               }
-//             });

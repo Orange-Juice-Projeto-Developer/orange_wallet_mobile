@@ -2,12 +2,12 @@ import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:orange_wallet_mobile/controller/list_category_controller.dart';
-import 'package:orange_wallet_mobile/controller/list_transaction_controller.dart';
-import 'package:orange_wallet_mobile/models/create_transaction.dart';
 import '../models/category.dart';
 
 class CadastrarTransacaoButton extends StatefulWidget {
-  const CadastrarTransacaoButton({Key? key}) : super(key: key);
+  const CadastrarTransacaoButton({Key? key, required this.callback})
+      : super(key: key);
+  final Future<void> callback;
 
   @override
   State<CadastrarTransacaoButton> createState() =>
@@ -124,81 +124,6 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
         );
       }
     }
-
-    // DropdownButtonFormField<String> dropdownCategory() {
-    //   if (_receita) {
-    //     return DropdownButtonFormField<String>(
-    //         validator: (value) {
-    //           if (value == null || value.isEmpty) {
-    //             return 'Valor não pode ser nulo';
-    //           }
-    //         },
-    //         dropdownColor: Colors.grey[800],
-    //         decoration: InputDecoration(
-    //           focusedBorder: const OutlineInputBorder(
-    //               borderSide: BorderSide(color: Color(0XFFFF8A00))),
-    //           isDense: true,
-    //           filled: true,
-    //           hintText: 'Selecione a categoria',
-    //           enabledBorder: OutlineInputBorder(
-    //             borderRadius: BorderRadius.circular(8),
-    //             borderSide: const BorderSide(color: Colors.grey),
-    //           ),
-    //           disabledBorder: OutlineInputBorder(
-    //             borderSide: const BorderSide(color: Colors.grey),
-    //             borderRadius: BorderRadius.circular(8),
-    //           ),
-    //           border: OutlineInputBorder(
-    //               borderSide: const BorderSide(color: Colors.grey),
-    //               borderRadius: BorderRadius.circular(8)),
-    //         ),
-    //         items: List.generate(
-    //             category.length,
-    //             (index) => DropdownMenuItem(
-    //                   value: category[index].id.toString(),
-    //                   child: Text(category[index].categoryName ?? ''),
-    //                 )),
-    //         onChanged: (valueSelected) {
-    //           categoryController = valueSelected ?? '';
-    //         });
-    //   } else {
-    //     return DropdownButtonFormField<String>(
-    //       validator: (value) {
-    //         if (value == null || value.isEmpty) {
-    //           return 'Valor não pode ser nulo';
-    //         }
-    //       },
-    //       dropdownColor: Colors.grey[800],
-    //       decoration: InputDecoration(
-    //         focusedBorder: const OutlineInputBorder(
-    //             borderSide: BorderSide(color: Color(0XFFFF8A00))),
-    //         isDense: true,
-    //         filled: true,
-    //         hintText: 'Selecione a categoria',
-    //         enabledBorder: OutlineInputBorder(
-    //           borderRadius: BorderRadius.circular(8),
-    //           borderSide: const BorderSide(color: Colors.grey),
-    //         ),
-    //         disabledBorder: OutlineInputBorder(
-    //           borderSide: const BorderSide(color: Colors.grey),
-    //           borderRadius: BorderRadius.circular(8),
-    //         ),
-    //         border: OutlineInputBorder(
-    //             borderSide: const BorderSide(color: Colors.grey),
-    //             borderRadius: BorderRadius.circular(8)),
-    //       ),
-    //       onChanged: (value) {
-    //         categoryController = value ?? '';
-    //       },
-    //       items: List.generate(
-    //           category.length,
-    //           (index) => DropdownMenuItem(
-    //                 value: category[index].id.toString(),
-    //                 child: Text(category[index].categoryName ?? ''),
-    //               )),
-    //     );
-    //   }
-    // }
 
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
@@ -354,20 +279,6 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                               ),
                             ),
                           ),
-                          // dropdownCategory(),
-                          // const SizedBox(
-                          //   height: 20,
-                          //   width: 0,
-                          // ),
-                          // const Padding(
-                          //   padding: EdgeInsets.only(bottom: 8.0),
-                          //   child: Text(
-                          //     'Transação',
-                          //     style: TextStyle(
-                          //       fontSize: 16,
-                          //     ),
-                          //   ),
-                          // ),
                           Form(
                               key: formKey,
                               child: Column(
@@ -663,9 +574,6 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                               .replaceAll(',', '.'),
                                           category:
                                               int.parse(categoryController),
-                                          // categoryName: categoryController,
-                                          // categoryType:
-                                          //     typeController.text
                                           date:
                                               '${dataController.text.split('/').reversed.join('-')}T${DateTime.now().toString().substring(11, 23)}Z',
                                         );
@@ -710,6 +618,7 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                                                     ModalRoute
                                                                         .withName(
                                                                             '/'));
+                                                                widget.callback;
                                                               },
                                                               icon: const Icon(
                                                                   Icons.close,

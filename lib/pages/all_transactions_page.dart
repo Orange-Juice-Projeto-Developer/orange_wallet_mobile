@@ -39,7 +39,7 @@ class _AllTransactionsPageState extends State<AllTransactionsPage> {
             return ListView.builder(
                 itemCount: list.length,
                 itemBuilder: (_, index) {
-                  return ListaTransacoesContainer(
+                  return ListaTransacoesContainer(isLoading: false,
                       isVisible: true,
                       valorTransacao: list[index].value,
                       tituloTransacao: list[index].title,
