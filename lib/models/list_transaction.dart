@@ -28,7 +28,7 @@ class ListTransaction implements Comparable<ListTransaction> {
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
+      // 'id': id,
       'title': title,
       'value': value,
       'Category': category.toMap(),
@@ -53,7 +53,7 @@ class ListTransaction implements Comparable<ListTransaction> {
 
   @override
   String toString() {
-    return 'ListTransaction(title: $title, value: $value, category: $category, date: $date)';
+    return 'ListTransaction(id: $id, title: $title, value: $value, category: $category, date: $date)';
   }
 
   @override

@@ -44,7 +44,7 @@ class _AllTransactionsPageState extends State<AllTransactionsPage> {
                       valorTransacao: list[index].value,
                       tituloTransacao: list[index].title,
                       dataTransacao: list[index].date,
-                      isReceita: list[index].category.categoryType,
+                      isReceita: list[index].category.categoryType ?? '',
                       isFirst: list.first == list[index] ? true : false,
                       isLast: list.last == list[index] ? true : false);
                 });

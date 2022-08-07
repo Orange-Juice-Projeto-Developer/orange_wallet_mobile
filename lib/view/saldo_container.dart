@@ -13,14 +13,12 @@ class SaldoContainer extends StatefulWidget {
 class _SaldoContainerState extends State<SaldoContainer> {
   double saldoController = 0.0;
   double saldo = 0.0;
+
   @override
   void initState() {
     Future.delayed(Duration.zero, () async {
       saldoController = await ListTransactionController().getSaldo();
-      // saldo = await saldoController;
     });
-
-    // setState(() {});
 
     super.initState();
   }
@@ -29,19 +27,10 @@ class _SaldoContainerState extends State<SaldoContainer> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;
 
-    // Widget carregarSaldo(bool isVisible) {
-    //   if (isVisible) {
-    //     return
-    //   } else {
-    //     return const Text(
-    //       '*******',
-    //       style: TextStyle(fontSize: 32, color: Colors.white),
-    //     );
-    //   }
-    // }
     setState(() {
       saldo = saldoController;
     });
+
     return Container(
       height: mediaQuery.height * 0.11729,
       decoration: BoxDecoration(
@@ -71,10 +60,9 @@ class _SaldoContainerState extends State<SaldoContainer> {
                   style: TextStyle(fontSize: 24, color: Colors.white),
                 ),
                 Visibility(
-                  maintainState: true,
                   visible: widget.isVisible,
                   replacement: const Text('*******',
-                      style: TextStyle(fontSize: 32, color: Colors.white)),
+                  style: TextStyle(fontSize: 32, color: Colors.white)),
                   child: Text(
                     Convert.currency(valor: saldo),
                     style: const TextStyle(fontSize: 32, color: Colors.white),

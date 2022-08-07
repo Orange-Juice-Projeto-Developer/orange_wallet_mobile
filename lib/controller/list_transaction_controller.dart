@@ -26,6 +26,8 @@ class ListTransactionController {
 
       final transacaoDados1 = item1.date.substring(0, 10).split('-');
       final transacaoDados2 = item2.date.substring(0, 10).split('-');
+      final transacaoDados1T = item1.date.substring(11, 19).split(':');
+      final transacaoDados2T = item2.date.substring(11, 19).split(':');
 
       final ano1 = int.parse(transacaoDados1[0]);
       final ano2 = int.parse(transacaoDados2[0]);
@@ -36,6 +38,15 @@ class ListTransactionController {
       final dia1 = int.parse(transacaoDados1[2]);
       final dia2 = int.parse(transacaoDados2[2]);
 
+      final hora1 = int.parse(transacaoDados1T[0]);
+      final hora2 = int.parse(transacaoDados2T[0]);
+
+      final minuto1 = int.parse(transacaoDados1T[1]);
+      final minuto2 = int.parse(transacaoDados2T[1]);
+
+      final segundo1 = int.parse(transacaoDados1T[2]);
+      final segundo2 = int.parse(transacaoDados2T[2]);
+
       if (ano1 < ano2) {
         return 1;
       } else if (ano1 == ano2) {
@@ -45,7 +56,25 @@ class ListTransactionController {
           if (dia1 < dia2) {
             return 1;
           } else if (dia1 == dia2) {
-            return 0;
+            if (hora1 < hora2) {
+              return 1;
+            } else if (hora1 == hora2) {
+              if (minuto1 < minuto2) {
+                return 1;
+              } else if (minuto1 == minuto2) {
+                if (segundo1 < segundo2) {
+                  return 1;
+                } else if (segundo1 == segundo2) {
+                  return 0;
+                } else {
+                  return -1;
+                }
+              } else {
+                return -1;
+              }
+            } else {
+              return -1;
+            }
           } else {
             return -1;
           }
@@ -94,29 +123,5 @@ class ListTransactionController {
       saldo += objeto.value;
     }
     return saldo;
-  }
-
-  Future<bool> saveData(
-      {required String title,
-      required String value,
-      required Category category,
-      required String date}) async {
-    final transacao = ListTransaction(
-        title: title,
-        value: double.parse(value),
-        category: category,
-        date: date);
-
-    try {
-      String response = await _listTransactionRepository.insert(transacao);
-
-      if (int.tryParse(response)! >= 200 && int.tryParse(response)! < 300) {
-        return true;
-      } else {
-        return false;
-      }
-    } on Exception {
-      return false;
-    }
   }
 }

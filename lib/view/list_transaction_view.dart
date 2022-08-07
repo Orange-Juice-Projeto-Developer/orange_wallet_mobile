@@ -57,7 +57,7 @@ class _ListTransactionViewState extends State<ListTransactionView> {
                     valorTransacao: list[index].value,
                     tituloTransacao: list[index].title,
                     dataTransacao: list[index].date,
-                    isReceita: list[index].category.categoryType);
+                    isReceita: list[index].category.categoryType ?? '');
               },
             ),
           );

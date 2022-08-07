@@ -18,8 +18,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
-    ListTransactionView? listTransaction =
+    ListTransactionView listTransaction =
         ListTransactionView(isVisible: isVisible);
+
+    var saldoContainer = SaldoContainer(isVisible: isVisible);
+    var receitaContainer =
+        ReceitaDespesaContainer(isReceita: true, isVisible: isVisible);
+    var despesaContainer =
+        ReceitaDespesaContainer(isReceita: false, isVisible: isVisible);
 
     return Scaffold(
       body: RefreshIndicator(
@@ -28,7 +34,12 @@ class _HomePageState extends State<HomePage> {
         onRefresh: () {
           return Future.delayed(const Duration(seconds: 1), () {
             setState(() {
-              
+              listTransaction = ListTransactionView(isVisible: isVisible);
+              saldoContainer = SaldoContainer(isVisible: isVisible);
+              receitaContainer = ReceitaDespesaContainer(
+                  isReceita: true, isVisible: isVisible);
+              despesaContainer = ReceitaDespesaContainer(
+                  isReceita: false, isVisible: isVisible);
             });
           });
         },
@@ -111,29 +122,19 @@ class _HomePageState extends State<HomePage> {
                       padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Column(
                         children: [
-                          SaldoContainer(
-                            isVisible: isVisible,
-                          ),
+                          saldoContainer,
                           SizedBox(
                             height: mediaQuery.height * 0.02843,
                             width: 0,
                           ),
                           Row(
                             children: [
-                              Expanded(
-                                  child: ReceitaDespesaContainer(
-                                isReceita: true,
-                                isVisible: isVisible,
-                              )),
+                              Expanded(child: receitaContainer),
                               SizedBox(
                                 height: 0,
                                 width: mediaQuery.width * 0.008,
                               ),
-                              Expanded(
-                                  child: ReceitaDespesaContainer(
-                                isReceita: false,
-                                isVisible: isVisible,
-                              )),
+                              Expanded(child: despesaContainer),
                             ],
                           ),
                           SizedBox(

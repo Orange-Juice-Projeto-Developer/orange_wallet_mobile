@@ -1,8 +1,9 @@
 import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:orange_wallet_mobile/controller/list_category_controller.dart';
 import 'package:orange_wallet_mobile/controller/list_transaction_controller.dart';
-
+import 'package:orange_wallet_mobile/models/create_transaction.dart';
 import '../models/category.dart';
 
 class CadastrarTransacaoButton extends StatefulWidget {
@@ -21,6 +22,8 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
   TextEditingController titleController = TextEditingController();
   TextEditingController typeController = TextEditingController();
   var formKey = GlobalKey<FormState>();
+  List<Category> receitaCategory = [];
+  List<Category> despesaCategory = [];
 
   @override
   void dispose() {
@@ -32,10 +35,20 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
   }
 
   @override
+  void initState() {
+    ListCategoryController()
+        .findByType('Receita')
+        .then((value) => receitaCategory = value);
+    ListCategoryController()
+        .findByType('Despesa')
+        .then((value) => despesaCategory = value);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var mediaQuery = MediaQuery.of(context).size;
-
-    var connection = ListTransactionController();
+    var connection = ListCategoryController();
 
     DropdownButtonFormField<String> dropdownCategory() {
       if (_receita) {
@@ -64,36 +77,12 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                   borderSide: const BorderSide(color: Colors.grey),
                   borderRadius: BorderRadius.circular(8)),
             ),
-            items: const [
-              DropdownMenuItem(
-                value: 'Salário',
-                child: Text('Salário'),
-              ),
-              DropdownMenuItem(
-                value: '13º Salário',
-                child: Text('13º Salário'),
-              ),
-              DropdownMenuItem(
-                value: 'Aluguéis',
-                child: Text('Aluguéis'),
-              ),
-              DropdownMenuItem(
-                value: 'Férias',
-                child: Text('Férias'),
-              ),
-              DropdownMenuItem(
-                value: 'Renda extra',
-                child: Text('Renda extra'),
-              ),
-              DropdownMenuItem(
-                value: 'Renda de Investimento',
-                child: Text('Renda de investimento'),
-              ),
-              DropdownMenuItem(
-                value: 'Rendimentos bancários',
-                child: Text('Rendimentos bancários'),
-              ),
-            ],
+            items: List.generate(
+                receitaCategory.length,
+                (index) => DropdownMenuItem(
+                      value: receitaCategory[index].id.toString(),
+                      child: Text(receitaCategory[index].categoryName ?? ''),
+                    )),
             onChanged: (valueSelected) {
               categoryController = valueSelected ?? '';
             });
@@ -126,103 +115,90 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
           onChanged: (value) {
             categoryController = value ?? '';
           },
-          items: const [
-            DropdownMenuItem(
-              value: 'Alimentação',
-              child: Text('Alimentação'),
-            ),
-            DropdownMenuItem(
-              value: 'Combustível',
-              child: Text('Combustível'),
-            ),
-            DropdownMenuItem(
-              value: 'Despesas pessoais',
-              child: Text('Despesas pessoais'),
-            ),
-            DropdownMenuItem(
-              value: 'Educação',
-              child: Text('Educação'),
-            ),
-            DropdownMenuItem(
-              value: 'Empréstimos',
-              child: Text('Empréstimos'),
-            ),
-            DropdownMenuItem(
-              value: 'Estacionamento',
-              child: Text('Estacionamento'),
-            ),
-            DropdownMenuItem(
-              value: 'Farmácia',
-              child: Text('Farmácia'),
-            ),
-            DropdownMenuItem(
-              value: 'Internet',
-              child: Text('Internet'),
-            ),
-            DropdownMenuItem(
-              value: 'IPVA',
-              child: Text('IPVA'),
-            ),
-            DropdownMenuItem(
-              value: 'Lazer',
-              child: Text('Lazer'),
-            ),
-            DropdownMenuItem(
-              value: 'Livros',
-              child: Text('Livros'),
-            ),
-            DropdownMenuItem(
-              value: 'Manutenção veicular',
-              child: Text('Manutenção veicular'),
-            ),
-            DropdownMenuItem(
-              value: 'Moradia',
-              child: Text('Moradia'),
-            ),
-            DropdownMenuItem(
-              value: 'Pets',
-              child: Text('Pets'),
-            ),
-            DropdownMenuItem(
-              value: 'Presentes',
-              child: Text('Presentes'),
-            ),
-            DropdownMenuItem(
-              value: 'Saúde',
-              child: Text('Saúde'),
-            ),
-            DropdownMenuItem(
-              value: 'Seguro',
-              child: Text('Seguro'),
-            ),
-            DropdownMenuItem(
-              value: 'Stream',
-              child: Text('Stream'),
-            ),
-            DropdownMenuItem(
-              value: 'Tecnologia',
-              child: Text('Tecnologia'),
-            ),
-            DropdownMenuItem(
-              value: 'Telefonia',
-              child: Text('Telefonia'),
-            ),
-            DropdownMenuItem(
-              value: 'Transporte',
-              child: Text('Transporte'),
-            ),
-            DropdownMenuItem(
-              value: 'Vestuário',
-              child: Text('Vestuário'),
-            ),
-            DropdownMenuItem(
-              value: 'Viagens',
-              child: Text('Viagens'),
-            ),
-          ],
+          items: List.generate(
+              despesaCategory.length,
+              (index) => DropdownMenuItem(
+                    value: despesaCategory[index].id.toString(),
+                    child: Text(despesaCategory[index].categoryName ?? ''),
+                  )),
         );
       }
     }
+
+    // DropdownButtonFormField<String> dropdownCategory() {
+    //   if (_receita) {
+    //     return DropdownButtonFormField<String>(
+    //         validator: (value) {
+    //           if (value == null || value.isEmpty) {
+    //             return 'Valor não pode ser nulo';
+    //           }
+    //         },
+    //         dropdownColor: Colors.grey[800],
+    //         decoration: InputDecoration(
+    //           focusedBorder: const OutlineInputBorder(
+    //               borderSide: BorderSide(color: Color(0XFFFF8A00))),
+    //           isDense: true,
+    //           filled: true,
+    //           hintText: 'Selecione a categoria',
+    //           enabledBorder: OutlineInputBorder(
+    //             borderRadius: BorderRadius.circular(8),
+    //             borderSide: const BorderSide(color: Colors.grey),
+    //           ),
+    //           disabledBorder: OutlineInputBorder(
+    //             borderSide: const BorderSide(color: Colors.grey),
+    //             borderRadius: BorderRadius.circular(8),
+    //           ),
+    //           border: OutlineInputBorder(
+    //               borderSide: const BorderSide(color: Colors.grey),
+    //               borderRadius: BorderRadius.circular(8)),
+    //         ),
+    //         items: List.generate(
+    //             category.length,
+    //             (index) => DropdownMenuItem(
+    //                   value: category[index].id.toString(),
+    //                   child: Text(category[index].categoryName ?? ''),
+    //                 )),
+    //         onChanged: (valueSelected) {
+    //           categoryController = valueSelected ?? '';
+    //         });
+    //   } else {
+    //     return DropdownButtonFormField<String>(
+    //       validator: (value) {
+    //         if (value == null || value.isEmpty) {
+    //           return 'Valor não pode ser nulo';
+    //         }
+    //       },
+    //       dropdownColor: Colors.grey[800],
+    //       decoration: InputDecoration(
+    //         focusedBorder: const OutlineInputBorder(
+    //             borderSide: BorderSide(color: Color(0XFFFF8A00))),
+    //         isDense: true,
+    //         filled: true,
+    //         hintText: 'Selecione a categoria',
+    //         enabledBorder: OutlineInputBorder(
+    //           borderRadius: BorderRadius.circular(8),
+    //           borderSide: const BorderSide(color: Colors.grey),
+    //         ),
+    //         disabledBorder: OutlineInputBorder(
+    //           borderSide: const BorderSide(color: Colors.grey),
+    //           borderRadius: BorderRadius.circular(8),
+    //         ),
+    //         border: OutlineInputBorder(
+    //             borderSide: const BorderSide(color: Colors.grey),
+    //             borderRadius: BorderRadius.circular(8)),
+    //       ),
+    //       onChanged: (value) {
+    //         categoryController = value ?? '';
+    //       },
+    //       items: List.generate(
+    //           category.length,
+    //           (index) => DropdownMenuItem(
+    //                 value: category[index].id.toString(),
+    //                 child: Text(category[index].categoryName ?? ''),
+    //               )),
+    //     );
+    //   }
+    // }
 
     return ElevatedButton.icon(
       style: ElevatedButton.styleFrom(
@@ -378,25 +354,39 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                               ),
                             ),
                           ),
-                          dropdownCategory(),
-                          const SizedBox(
-                            height: 20,
-                            width: 0,
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 8.0),
-                            child: Text(
-                              'Transação',
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
+                          // dropdownCategory(),
+                          // const SizedBox(
+                          //   height: 20,
+                          //   width: 0,
+                          // ),
+                          // const Padding(
+                          //   padding: EdgeInsets.only(bottom: 8.0),
+                          //   child: Text(
+                          //     'Transação',
+                          //     style: TextStyle(
+                          //       fontSize: 16,
+                          //     ),
+                          //   ),
+                          // ),
                           Form(
                               key: formKey,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  dropdownCategory(),
+                                  const SizedBox(
+                                    height: 20,
+                                    width: 0,
+                                  ),
+                                  const Padding(
+                                    padding: EdgeInsets.only(bottom: 8.0),
+                                    child: Text(
+                                      'Transação',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
                                   SizedBox(
                                     height: 80,
                                     child: TextFormField(
@@ -666,16 +656,19 @@ class _CadastrarTransacaoButtonState extends State<CadastrarTransacaoButton> {
                                               false;
 
                                       if (validate) {
-                                        bool response = await connection.saveData(
-                                            title: titleController.text,
-                                            value: valueController.text,
-                                            category: Category(
-                                                categoryName:
-                                                    categoryController,
-                                                categoryType:
-                                                    typeController.text),
-                                            date:
-                                                '${dataController.text.split('/').reversed.join('-')}T00:17:54.575Z');
+                                        bool response =
+                                            await connection.saveData(
+                                          title: titleController.text,
+                                          value: valueController.text
+                                              .replaceAll(',', '.'),
+                                          category:
+                                              int.parse(categoryController),
+                                          // categoryName: categoryController,
+                                          // categoryType:
+                                          //     typeController.text
+                                          date:
+                                              '${dataController.text.split('/').reversed.join('-')}T${DateTime.now().toString().substring(11, 23)}Z',
+                                        );
 
                                         if (response = true) {
                                           showDialog(

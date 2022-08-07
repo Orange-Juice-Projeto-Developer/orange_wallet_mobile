@@ -1,13 +1,25 @@
 import 'dart:convert';
 
 class Category {
-  String categoryName;
-  String categoryType;
+  // {
+  //   "id": 3,
+  //   "categoryName": "13º salário",
+  //   "categoryType": "Receita"
+  // },
+  
+  int id;
+  String? categoryName;
+  String? categoryType;
 
-  Category({required this.categoryName, required this.categoryType});
+  Category({
+    required this.id,
+    required this.categoryName,
+    required this.categoryType,
+  });
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'categoryName': categoryName,
       'categoryType': categoryType,
     };
@@ -15,6 +27,7 @@ class Category {
 
   factory Category.fromMap(Map<String, dynamic> mapa) {
     return Category(
+      id: mapa['id'] ?? 0,
       categoryName: mapa['categoryName'] ?? '',
       categoryType: mapa['categoryType'] ?? '',
     );
