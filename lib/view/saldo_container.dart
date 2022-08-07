@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:orange_wallet_mobile/view/loading/shimmer_loading.dart';
 import '../global/convert.dart';
 
 class SaldoContainer extends StatelessWidget {
@@ -18,58 +17,6 @@ class SaldoContainer extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context).size;
 
     Widget _buildText() {
-      if (isLoading) {
-        return ShimmerLoading(
-          isLoading: isLoading,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Container(
-                  width: 126,
-                  height: 16,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Container(
-                    width: 159,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  const Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 8.0),
-                    child: Container(
-                      width: 44,
-                      height: 44,
-                      decoration: const BoxDecoration(
-                        color: Colors.black,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 44,
-                  ),
-                ],
-              )
-            ],
-          ),
-        );
-      } else {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -118,7 +65,6 @@ class SaldoContainer extends StatelessWidget {
           ],
         );
       }
-    }
 
     return Container(
       height: mediaQuery.height * 0.11729,
