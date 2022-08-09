@@ -2,27 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:orange_wallet_mobile/controller/list_transaction_controller.dart';
 import 'package:orange_wallet_mobile/view/cadastrar_transacao_button.dart';
 import 'package:orange_wallet_mobile/view/list_transaction_view.dart';
-import 'package:orange_wallet_mobile/view/loading/shimmer.dart';
 import 'package:orange_wallet_mobile/view/notification_button.dart';
 import 'package:orange_wallet_mobile/view/receita_despesa_container.dart';
 import 'package:orange_wallet_mobile/view/saldo_container.dart';
 import '../models/list_transaction.dart';
-
-const _shimmerGradient = LinearGradient(
-  colors: [
-    Colors.grey,
-    Color.fromARGB(249, 114, 114, 120),
-    Color.fromARGB(240, 80, 80, 82),
-  ],
-  stops: [
-    0.1,
-    0.3,
-    0.4,
-  ],
-  begin: Alignment(-1.0, -0.3),
-  end: Alignment(1.0, 0.3),
-  tileMode: TileMode.clamp,
-);
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -33,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isLoading = false;
-  bool _isVisible = true;
+  bool _isVisible = false;
 
   var controller = ListTransactionController();
   var saldoGeral = 0.0;
