@@ -29,6 +29,6 @@ cd orange_wallet_mobile
 ```bash
 code .
 ```
-Contributors:
+## 👨‍💼 Contributors
 
 Sérgio R. R. Teixeira (@kakosergio)
