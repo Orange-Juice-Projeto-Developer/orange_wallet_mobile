@@ -31,4 +31,4 @@ code .
 ```
 ## 👨‍💼 Contributors
 
-Sérgio R. R. Teixeira (@kakosergio)
+- Sérgio R. R. Teixeira (@kakosergio)
